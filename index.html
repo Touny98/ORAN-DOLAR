@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ORAN DOLAR – Cotización en tiempo real | Orán, Salta</title>
+  <meta name="description" content="Cotización del dólar blue, oficial, MEP, CCL y boliviano en tiempo real para Orán, Salta. Tu referencia de cambio en la frontera con Bolivia." />
+  <meta name="theme-color" content="#0a0e1a" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="ORAN DOLAR – Cotización en tiempo real" />
+  <meta property="og:description" content="Dólar blue, oficial, MEP, CCL, cripto y boliviano en tiempo real. Para la gente de Orán." />
+  <meta property="og:type" content="website" />
+
+  <link rel="stylesheet" href="css/style.css" />
+
+  <!-- Google AdSense (reemplazar data-ad-client con tu Publisher ID al aprobar la cuenta) -->
+  <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script> -->
+</head>
+<body>
+
+  <!-- ══ ALERTA DE LLUVIA ══ -->
+  <div id="alert-banner" role="alert">
+    <span class="alert-icon">⚠️</span>
+    <span class="alert-text" id="alert-text"></span>
+    <button id="alert-dismiss">Entendido</button>
+  </div>
+
+  <!-- ══ NAVBAR ══ -->
+  <nav id="navbar">
+    <div class="nav-brand">
+      <span class="nav-logo">ORAN <span>DOLAR</span></span>
+      <span class="nav-badge">EN VIVO</span>
+    </div>
+
+    <ul class="nav-links" id="nav-links">
+      <li><a href="#cotizaciones">Cotizaciones</a></li>
+      <li><a href="#viaje">Info de Viaje</a></li>
+      <li><a href="#casas-cambio">Casas de Cambio</a></li>
+    </ul>
+
+    <div class="nav-right">
+      <span class="update-badge">
+        <span class="update-dot"></span>
+        <span id="update-time">Cargando…</span>
+      </span>
+      <button id="refresh-btn" title="Actualizar cotizaciones">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="23 4 23 10 17 10"/>
+          <polyline points="1 20 1 14 7 14"/>
+          <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+        </svg>
+      </button>
+      <button class="hamburger" id="hamburger" aria-label="Menú">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ══ MAIN ══ -->
+  <main>
+
+    <!-- ── HERO: COTIZACIONES + CONVERSOR + CLIMA ── -->
+    <section id="cotizaciones" class="section section-hero">
+      <div class="container">
+
+        <!-- AdSense Banner -->
+        <div class="ad-slot ad-slot-banner">
+          <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXX" data-ad-slot="XXXX" data-ad-format="auto" data-full-width-responsive="true"></ins> -->
+          <span>Publicidad</span>
+        </div>
+
+        <div class="hero-layout">
+
+          <!-- BLOQUE 1 (desktop: col-izq fila 1 | mobile: orden 1) -->
+          <div class="hero-rates">
+            <div class="section-header section-header-sm">
+              <h2>💵 Cotizaciones del Día</h2>
+            </div>
+            <div class="rates-grid rates-grid-compact" id="rates-grid">
+              <div class="rate-card"><div class="skeleton-line shimmer"></div><div class="skeleton-big shimmer" style="margin-top:10px"></div></div>
+              <div class="rate-card"><div class="skeleton-line shimmer"></div><div class="skeleton-big shimmer" style="margin-top:10px"></div></div>
+              <div class="rate-card"><div class="skeleton-line shimmer"></div><div class="skeleton-big shimmer" style="margin-top:10px"></div></div>
+              <div class="rate-card"><div class="skeleton-line shimmer"></div><div class="skeleton-big shimmer" style="margin-top:10px"></div></div>
+            </div>
+          </div>
+
+          <!-- BLOQUE 2 (desktop: col-der fila 1+2 | mobile: orden 2) -->
+          <div class="hero-right">
+            <div class="section-header section-header-sm">
+              <h2 id="clima">🌤️ Clima</h2>
+            </div>
+            <div class="weather-grid weather-grid-stacked">
+              <div class="weather-card" id="weather-oran">
+                <div class="weather-city">🇦🇷 Orán, Salta</div>
+                <div class="weather-main">
+                  <div class="shimmer" style="width:40px;height:40px;border-radius:50%"></div>
+                  <div><div class="skeleton-big shimmer"></div></div>
+                </div>
+              </div>
+              <div class="weather-card" id="weather-bermejo">
+                <div class="weather-city">🇧🇴 Bermejo, Bolivia</div>
+                <div class="weather-main">
+                  <div class="shimmer" style="width:40px;height:40px;border-radius:50%"></div>
+                  <div><div class="skeleton-big shimmer"></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- BLOQUE 3 (desktop: col-izq fila 2 | mobile: orden 3) -->
+          <div class="hero-conversor">
+            <div class="section-header section-header-sm">
+              <h2 id="conversor">🔄 Conversor</h2>
+            </div>
+            <div class="converter-widget">
+              <div class="converter-row">
+                <div class="converter-input-group">
+                  <label for="conv-amount">Monto</label>
+                  <input id="conv-amount" type="number" min="0" placeholder="0" value="100" />
+                </div>
+                <div class="converter-input-group">
+                  <label for="conv-from">Desde</label>
+                  <select id="conv-from"></select>
+                </div>
+                <div class="converter-arrow">→</div>
+                <div class="converter-input-group">
+                  <label for="conv-to">Hacia</label>
+                  <select id="conv-to"></select>
+                </div>
+                <div class="converter-result-group">
+                  <label>Resultado</label>
+                  <div class="converter-result" id="conv-result">—</div>
+                </div>
+              </div>
+              <p class="converter-note" id="conv-note"></p>
+            </div>
+          </div>
+
+        </div><!-- /hero-layout -->
+      </div>
+    </section>
+
+    <!-- ── AD ENTRE SECCIONES ── -->
+    <div class="container" style="padding-top:0;padding-bottom:0;">
+      <div class="ad-slot ad-slot-rect" style="max-width:336px;margin:0 auto 0;">
+        <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXX" data-ad-slot="XXXX"></ins> -->
+        <span>Publicidad</span>
+      </div>
+    </div>
+
+    <!-- ── INFO DE VIAJE ── -->
+    <section id="viaje" class="section">
+      <div class="container">
+        <div class="section-header">
+          <h2>🚗 Info de Viaje: Orán → Bermejo</h2>
+          <p>Todo lo que necesitás saber antes de cruzar la frontera</p>
+        </div>
+
+        <div class="accordion">
+
+          <!-- Tiempos estimados -->
+          <div class="accordion-item open">
+            <button class="accordion-header">
+              <span class="accordion-title"><span class="accordion-icon">⏱️</span> Tiempos estimados de viaje</span>
+              <svg class="accordion-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="accordion-body">
+              <table class="info-table">
+                <thead><tr><th>Tramo</th><th>Tiempo estimado</th><th>Observación</th></tr></thead>
+                <tbody>
+                  <tr><td>Orán centro → Aguas Blancas</td><td>15–20 min</td><td>Ruta 50, pavimentada</td></tr>
+                  <tr><td>Espera en Gendarmería (Argentina)</td><td>5–20 min</td><td>Variable según el día</td></tr>
+                  <tr><td>Chalana Aguas Blancas → Bermejo</td><td>5–10 min</td><td>Suspendida con río crecido</td></tr>
+                  <tr><td>Aduana boliviana + entrada</td><td>15–30 min</td><td>Fines de semana: más demora</td></tr>
+                  <tr><td><strong>Total estimado</strong></td><td><strong>40–80 min</strong></td><td>Ida solamente</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- La chalana -->
+          <div class="accordion-item">
+            <button class="accordion-header">
+              <span class="accordion-title"><span class="accordion-icon">⛵</span> La Chalana (cruce del río)</span>
+              <svg class="accordion-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="accordion-body">
+              <ul class="info-list">
+                <li>El cruce se hace en balsa (chalana) sobre el Río Bermejo en Aguas Blancas.</li>
+                <li>Horario habitual: 6:00 a 20:00hs (confirmar antes de ir).</li>
+                <li>El servicio se suspende cuando el caudal del río es peligroso (épocas de lluvias intensas).</li>
+                <li>Se cobra por persona y por vehículo. Llevar pesos argentinos o bolivianos en efectivo.</li>
+                <li>Con lluvia fuerte el día anterior, es recomendable consultar el estado del río antes de salir.</li>
+                <li>Si la chalana está suspendida, el paso más cercano habilitado puede ser Salvador Mazza.</li>
+              </ul>
+              <div class="info-disclaimer">
+                ℹ️ Esta información es orientativa. Consultar en el puesto de Gendarmería o con operadores locales antes de viajar.
+              </div>
+            </div>
+          </div>
+
+          <!-- Aduana boliviana -->
+          <div class="accordion-item">
+            <button class="accordion-header">
+              <span class="accordion-title"><span class="accordion-icon">🛃</span> Aduana boliviana — ¿Qué podés llevar?</span>
+              <svg class="accordion-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="accordion-body">
+              <ul class="info-list">
+                <li>Podés ingresar con artículos de uso personal sin declarar (ropa, medicamentos, electrónica de uso propio).</li>
+                <li>Límite de efectivo sin declarar: USD 10.000 (o equivalente). Montos mayores deben declararse en aduana.</li>
+                <li>No se permite el ingreso de frutas, verduras y carnes frescas sin certificado sanitario.</li>
+                <li>Para compras en Bermejo, recordá guardar los tickets: en el regreso la aduana argentina puede controlar.</li>
+                <li>Argentina permite ingresar compras de hasta USD 300 por persona sin pagar impuestos (régimen de equipaje).</li>
+                <li>Artículos nuevos por encima del límite tributan en aduana argentina.</li>
+              </ul>
+              <div class="info-disclaimer">
+                ℹ️ Las normas aduaneras pueden cambiar. Verificar siempre en el sitio oficial de AFIP y Aduana Nacional de Bolivia antes de viajar.
+              </div>
+            </div>
+          </div>
+
+          <!-- Tips generales -->
+          <div class="accordion-item">
+            <button class="accordion-header">
+              <span class="accordion-title"><span class="accordion-icon">💡</span> Tips para el viaje</span>
+              <svg class="accordion-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="accordion-body">
+              <ul class="info-list">
+                <li>Llevar DNI argentino vigente. No se necesita pasaporte para ciudadanos argentinos en Bolivia (Acuerdo MERCOSUR).</li>
+                <li>Llevar efectivo: en Bermejo el efectivo es el medio de pago más aceptado.</li>
+                <li>Los mejores días para ir: martes a jueves (menos gente en aduana).</li>
+                <li>Los peores días: lunes, viernes y fines de semana (mayor demanda).</li>
+                <li>En Bermejo hay cambio de moneda en el mercado central; verificar la tasa antes de cambiar.</li>
+                <li>Con lluvia intensa el día anterior revisar el estado del río Bermejo (ver sección Clima arriba).</li>
+                <li>Llevar bolsas grandes para cargar las compras: en la chalana el espacio es limitado.</li>
+                <li>Avisar a alguien antes de salir, especialmente si vas en moto o a pie.</li>
+              </ul>
+            </div>
+          </div>
+
+        </div><!-- /accordion -->
+      </div>
+    </section>
+
+    <!-- ── CASAS DE CAMBIO ── -->
+    <section id="casas-cambio" class="section">
+      <div class="container">
+        <div class="section-header">
+          <h2>🏪 Casas de Cambio en Orán</h2>
+          <p>Consultá directamente el precio del día con las casas de cambio locales</p>
+        </div>
+
+        <div class="casas-grid" id="casas-grid">
+          <!-- Se renderizan dinámicamente desde app.js -->
+        </div>
+
+        <div class="casas-cta">
+          <p>¿Sos una casa de cambio y querés aparecer aquí con tu cotización?</p>
+          <a class="btn-contact"
+             href="https://wa.me/5493877000000?text=Hola%2C+quiero+anunciar+mi+casa+de+cambio+en+ORAN+DOLAR"
+             target="_blank" rel="noopener">
+            📲 Contactanos por WhatsApp
+          </a>
+        </div>
+
+        <!-- AdSense Rectangle desktop -->
+        <div class="ad-slot ad-slot-rect" style="margin-top:24px;max-width:336px;">
+          <!-- Google AdSense 336×280 -->
+          <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXX" data-ad-slot="XXXX"></ins> -->
+          <span>Publicidad</span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ══ FOOTER ══ -->
+  <footer id="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <span class="nav-logo">ORAN <span>DOLAR</span></span>
+          <p>Cotizaciones en tiempo real para Orán, Salta</p>
+        </div>
+        <div class="footer-links">
+          <a href="#cotizaciones">Cotizaciones</a>
+          <a href="#viaje">Info de Viaje</a>
+          <a href="#casas-cambio">Casas de Cambio</a>
+          <a href="privacidad.html">Política de Privacidad</a>
+        </div>
+        <div>
+          <p class="footer-copy">Fuentes: DolarAPI · Open-Meteo · ExchangeRate-API</p>
+          <p class="footer-copy" style="margin-top:4px">Los datos son informativos. No constituyen asesoramiento financiero.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ══ TOAST CONTAINER ══ -->
+  <div id="toast-container"></div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
