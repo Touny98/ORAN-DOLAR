@@ -38,6 +38,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 function initVanta() {
   if (typeof VANTA !== 'undefined') {
+    const isMobile = window.innerWidth < 768;
+    
     VANTA.NET({
       el: "#vanta-bg",
       mouseControls: true,
@@ -49,9 +51,9 @@ function initVanta() {
       scaleMobile: 1.00,
       color: 0xfacc15,
       backgroundColor: 0x05070a,
-      points: 12.00,
-      maxDistance: 22.00,
-      spacing: 16.00
+      points: isMobile ? 8.00 : 12.00,
+      maxDistance: isMobile ? 18.00 : 22.00,
+      spacing: isMobile ? 20.00 : 16.00
     });
   }
 }
