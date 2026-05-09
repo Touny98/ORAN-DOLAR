@@ -40,7 +40,7 @@ function initVanta() {
   if (typeof VANTA !== 'undefined') {
     const isMobile = window.innerWidth < 768;
     
-    VANTA.NET({
+    const vantaInstance = VANTA.NET({
       el: "#vanta-bg",
       mouseControls: true,
       touchControls: true,
@@ -51,9 +51,13 @@ function initVanta() {
       scaleMobile: 1.00,
       color: 0xfacc15,
       backgroundColor: 0x05070a,
-      points: isMobile ? 8.00 : 12.00,
-      maxDistance: isMobile ? 18.00 : 22.00,
-      spacing: isMobile ? 20.00 : 16.00
+      points: isMobile ? 7.00 : 12.00,
+      maxDistance: isMobile ? 16.00 : 22.00,
+      spacing: isMobile ? 22.00 : 16.00
+    });
+
+    window.addEventListener('resize', () => {
+      if (vantaInstance) vantaInstance.resize();
     });
   }
 }

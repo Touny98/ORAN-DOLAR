@@ -3,9 +3,9 @@
 /* ── Variables ── */
 :root {
   --bg-base:       #05070a;
-  --bg-surface:    rgba(15, 22, 41, 0.58);
-  --bg-surface-2:  rgba(30, 41, 59, 0.68);
-  --bg-surface-3:  rgba(51, 65, 85, 0.68);
+  --bg-surface:    rgba(15, 22, 41, 0.63);
+  --bg-surface-2:  rgba(30, 41, 59, 0.73);
+  --bg-surface-3:  rgba(51, 65, 85, 0.73);
   --gold:          #facc15;
   --gold-glow:     rgba(250, 204, 21, 0.3);
   --gold-lt:       #fde047;
@@ -32,10 +32,9 @@
 html { scroll-behavior: smooth; }
 #vanta-bg {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
   z-index: -2 !important;
 }
 
