@@ -21,7 +21,7 @@ const CASAS = [
   //   blue_venta:  null,
   //   horario:    'Lun–Vie 8–13hs / 16–20hs',
   //   direccion:  'Av. 9 de Julio 123, Orán',
-  //   whatsapp:   '5493877000000',
+  //   whatsapp:   '5493878801149',
   // },
 ];
 
