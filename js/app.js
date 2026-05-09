@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 function initVanta() {
   if (typeof VANTA !== 'undefined') {
     VANTA.NET({
-      el: "body",
+      el: "#vanta-bg",
       mouseControls: true,
       touchControls: true,
       gyroControls: false,
