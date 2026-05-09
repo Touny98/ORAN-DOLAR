@@ -36,11 +36,16 @@ html { scroll-behavior: smooth; }
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: -1;
+  z-index: -2 !important;
 }
 
 body {
   background: var(--bg-base);
+  background-image: 
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 40px 40px;
+  background-attachment: fixed;
   color: var(--text);
   font-family: var(--font-body);
   font-size: 15px;
@@ -50,17 +55,25 @@ body {
   overflow-x: hidden;
 }
 
-/* ── Entrance Animations ── */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* ── Static Background Blobs ── */
+.bg-blobs {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
 }
+.bg-blob {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.15;
+}
+.blob-1 { background: var(--gold); top: -10%; left: -10%; }
+.blob-2 { background: var(--blue); bottom: -10%; right: -10%; }
+.blob-3 { background: var(--gold-lt); top: 30%; left: 40%; width: 400px; height: 400px; }
 
 .animate-in {
   animation: fadeInUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
