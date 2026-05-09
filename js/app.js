@@ -199,26 +199,26 @@ function buildRateCard({ key, label, flag, highlight }, rate) {
 function buildBOBCard(bob, arsPerBob) {
   const arsStr = arsPerBob ? formatNum(arsPerBob, 2) : '—';
   return `
-  <div class="rate-card">
+  <div class="rate-card highlight">
     <div class="card-header">
-      <span class="card-name">Boliviano (BOB)</span>
+      <span class="card-name" style="color:var(--gold); font-weight:700">Boliviano (BOB)</span>
       <span class="card-flag">🇧🇴</span>
     </div>
     <div class="card-prices">
       <div class="price-block">
-        <div class="price-label">1 USD</div>
-        <span class="price-value single">${formatNum(bob, 2)}</span>
+        <div class="price-label" style="font-size:12px; color:var(--text-muted)">1 DÓLAR VALE:</div>
+        <span class="price-value single">${formatNum(bob, 2)} <small style="font-size:14px">Bs</small></span>
       </div>
       <div class="price-block">
-        <div class="price-label">1.000 ARS Blue</div>
-        <span class="price-value single" style="font-size:20px">${arsStr}</span>
+        <div class="price-label" style="font-size:12px; color:var(--text-muted)">POR 1.000 PESOS:</div>
+        <span class="price-value single" style="font-size:24px">${arsStr} <small style="font-size:14px">Bs</small></span>
       </div>
     </div>
-    <div class="card-footer">
-      <span class="card-time"></span>
-      <span class="card-change neutral">BOB</span>
+    <div class="card-footer" style="border-top: 1px solid var(--border-gold); margin-top:15px; padding-top:10px">
+      <span class="card-time" style="font-size:11px; color:var(--text-muted)">Referencia para cambio en frontera</span>
     </div>
-  </div>`;
+  </div>
+  `;
 }
 
 /* ── Render weather ── */
