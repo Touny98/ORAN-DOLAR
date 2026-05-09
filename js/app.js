@@ -156,16 +156,16 @@ function renderRateCards(rates, bob) {
   const grid = document.getElementById('rates-grid');
   grid.innerHTML = '';
 
+  /* Tarjeta ARS → BOB (Ahora PRIMERA) */
+  if (rates.blue && bob) {
+    const arsPerBob = rates.blue.venta ? (1000 / rates.blue.venta) * bob : null;
+    grid.insertAdjacentHTML('beforeend', buildBOBCard(bob, arsPerBob));
+  }
+
   for (const cfg of CARD_CONFIG) {
     const rate = rates[cfg.key];
     if (!rate) continue;
     grid.insertAdjacentHTML('beforeend', buildRateCard(cfg, rate));
-  }
-
-  /* Tarjeta ARS → BOB */
-  if (rates.blue && bob) {
-    const arsPerBob = rates.blue.venta ? (1000 / rates.blue.venta) * bob : null;
-    grid.insertAdjacentHTML('beforeend', buildBOBCard(bob, arsPerBob));
   }
 }
 
