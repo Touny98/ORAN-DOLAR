@@ -857,3 +857,19 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   .rates-grid-compact { grid-template-columns: repeat(2, 1fr); }
   .casas-grid { grid-template-columns: 1fr; }
 }
+
+/* ── Entrance Animations ── */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-in {
+  animation: fadeInUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
