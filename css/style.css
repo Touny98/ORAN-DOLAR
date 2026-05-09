@@ -1,28 +1,30 @@
-@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700&family=Inter:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Inter:wght@400;500;600&display=swap');
 
 /* ── Variables ── */
 :root {
-  --bg-base:       #0a0e1a;
-  --bg-surface:    #0f1629;
-  --bg-surface-2:  #162040;
-  --bg-surface-3:  #1e2d54;
-  --gold:          #f0b429;
-  --gold-lt:       #fcd34d;
-  --green:         #22c55e;
-  --green-dk:      #052e16;
-  --red:           #ef4444;
-  --red-dk:        #450a0a;
-  --blue:          #3b82f6;
-  --text:          #f1f5f9;
+  --bg-base:       #05070a;
+  --bg-surface:    rgba(15, 22, 41, 0.4);
+  --bg-surface-2:  rgba(30, 41, 59, 0.5);
+  --bg-surface-3:  rgba(51, 65, 85, 0.5);
+  --gold:          #facc15;
+  --gold-glow:     rgba(250, 204, 21, 0.3);
+  --gold-lt:       #fde047;
+  --green:         #4ade80;
+  --green-dk:      #064e3b;
+  --red:           #f87171;
+  --red-dk:        #7f1d1d;
+  --blue:          #60a5fa;
+  --text:          #f8fafc;
   --text-muted:    #94a3b8;
-  --text-dim:      #475569;
-  --border:        #1e3a5f;
-  --border-bright: #2563eb;
+  --text-dim:      #64748b;
+  --border:        rgba(255, 255, 255, 0.08);
+  --border-bright: rgba(255, 255, 255, 0.2);
   --font-body:     'Inter', system-ui, sans-serif;
-  --font-number:   'Barlow Condensed', 'Inter', sans-serif;
-  --radius:        10px;
-  --radius-sm:     6px;
-  --shadow:        0 4px 24px rgba(0,0,0,0.4);
+  --font-title:    'Outfit', 'Inter', sans-serif;
+  --radius:        16px;
+  --radius-sm:     8px;
+  --shadow:        0 10px 30px -10px rgba(0, 0, 0, 0.5);
+  --glass:         backdrop-filter: blur(12px);
 }
 
 /* ── Reset & Base ── */
@@ -30,14 +32,22 @@
 html { scroll-behavior: smooth; }
 body {
   background: var(--bg-base);
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(250, 204, 21, 0.05) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(96, 165, 250, 0.05) 0px, transparent 50%);
   color: var(--text);
   font-family: var(--font-body);
   font-size: 15px;
-  line-height: 1.5;
+  line-height: 1.6;
   min-height: 100vh;
 }
-a { color: var(--gold); text-decoration: none; }
-a:hover { color: var(--gold-lt); }
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-title);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+a { color: var(--gold); text-decoration: none; transition: color 0.2s, opacity 0.2s; }
+a:hover { color: var(--gold-lt); opacity: 0.9; }
 button { cursor: pointer; border: none; background: none; font-family: inherit; }
 
 /* ── Scrollbar ── */
@@ -73,11 +83,12 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 
 /* ── Navbar ── */
 #navbar {
-  background: rgba(10,14,26,0.95);
-  backdrop-filter: blur(8px);
+  background: rgba(5, 7, 10, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--border);
   padding: 0 20px;
-  height: 60px;
+  height: 64px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -198,23 +209,31 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 /* ── Rate Card ── */
 .rate-card {
   background: var(--bg-surface);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 18px;
-  transition: border-color .2s, transform .15s;
+  padding: 20px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
+  box-shadow: var(--shadow);
 }
 .rate-card::before {
   content: '';
   position: absolute;
   top: 0; left: 0; right: 0;
-  height: 2px;
+  height: 3px;
   background: linear-gradient(90deg, var(--gold), transparent);
   opacity: 0;
-  transition: opacity .2s;
+  transition: opacity 0.3s;
 }
-.rate-card:hover { border-color: var(--border-bright); transform: translateY(-2px); }
+.rate-card:hover { 
+  border-color: var(--border-bright); 
+  transform: translateY(-4px); 
+  background: var(--bg-surface-2);
+  box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.7);
+}
 .rate-card:hover::before { opacity: 1; }
 .rate-card.highlight { border-color: var(--gold); }
 .rate-card.highlight::before { opacity: 1; background: linear-gradient(90deg, var(--gold), var(--gold-lt)); }
@@ -303,12 +322,14 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .ad-slot-banner { height: 90px; margin: 20px 0; }
 .ad-slot-rect { height: 250px; }
 
-/* ── Converter ── */
-#conversor {
+.converter-widget {
   background: var(--bg-surface);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 28px;
+  box-shadow: var(--shadow);
 }
 .converter-row {
   display: flex;
@@ -389,9 +410,17 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 }
 .weather-card {
   background: var(--bg-surface);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 24px;
+  box-shadow: var(--shadow);
+  transition: transform 0.3s ease;
+}
+.weather-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-bright);
 }
 .weather-city {
   font-size: 12px;
@@ -644,6 +673,19 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 }
 .toast.error { border-color: var(--red); background: var(--red-dk); }
 .toast.success { border-color: var(--green); background: var(--green-dk); }
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-in {
+  animation: fadeInUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
 @keyframes slideIn {
   from { transform: translateX(20px); opacity: 0; }
   to   { transform: translateX(0);    opacity: 1; }

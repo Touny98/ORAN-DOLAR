@@ -19,67 +19,88 @@
 
   <style>
     .prose {
-      max-width: 720px;
+      max-width: 800px;
       margin: 40px auto;
-      padding: 0 20px;
+      padding: 40px;
+      background: var(--bg-surface);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
       color: var(--text);
-      line-height: 1.7;
+      line-height: 1.8;
       font-size: 16px;
     }
     .prose h1 {
-      font-size: 32px;
+      font-size: 42px;
       margin-bottom: 24px;
       color: var(--gold);
+      text-shadow: 0 0 20px var(--gold-glow);
     }
     .prose h2 {
-      font-size: 22px;
-      margin-top: 28px;
-      margin-bottom: 14px;
+      font-size: 28px;
+      margin-top: 40px;
+      margin-bottom: 16px;
       color: var(--gold);
     }
     .prose h3 {
-      font-size: 18px;
-      margin-top: 20px;
+      font-size: 20px;
+      margin-top: 32px;
       margin-bottom: 12px;
       color: var(--gold);
     }
-    .prose p {
-      margin-bottom: 16px;
+    .prose p, .prose li {
+      margin-bottom: 20px;
+      color: var(--text-muted);
     }
     .prose ul {
       margin-left: 24px;
-      margin-bottom: 16px;
+      margin-bottom: 24px;
+      list-style-type: none;
     }
     .prose li {
-      margin-bottom: 8px;
+      margin-bottom: 12px;
+      position: relative;
+      padding-left: 20px;
+    }
+    .prose li::before {
+      content: "→";
+      position: absolute;
+      left: 0;
+      color: var(--gold);
     }
     .prose strong {
-      color: var(--gold);
+      color: var(--text);
     }
     .last-updated {
       font-size: 14px;
-      color: var(--text-muted);
+      color: var(--text-dim);
       margin-bottom: 32px;
       padding-bottom: 16px;
       border-bottom: 1px solid var(--border);
     }
     .back-link {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
       color: var(--gold);
       text-decoration: none;
       margin-bottom: 32px;
       font-size: 14px;
-      transition: color 0.2s;
+      font-weight: 600;
+      transition: all 0.2s;
     }
     .back-link:hover {
       color: var(--gold-lt);
+      transform: translateX(-4px);
     }
   </style>
 </head>
 <body>
 
   <!-- ══ NAVBAR SIMPLIFICADO ══ -->
-  <nav id="navbar">
+  <nav id="navbar" class="animate-in">
     <div class="nav-brand">
       <a href="index.html" style="text-decoration: none;">
         <span class="nav-logo">ORAN <span>DOLAR</span></span>
@@ -92,7 +113,7 @@
     </ul>
   </nav>
 
-  <main>
+  <main class="animate-in" style="animation-delay: 0.1s">
     <div class="prose">
       <a href="index.html" class="back-link">← Volver al inicio</a>
 

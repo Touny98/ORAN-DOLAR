@@ -5,24 +5,80 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Política de Privacidad – ORAN DOLAR</title>
   <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/style.css" />
   <style>
-    .prose { max-width: 720px; margin: 40px auto; padding: 0 20px; }
-    .prose h1 { font-size: 24px; margin-bottom: 8px; }
-    .prose h2 { font-size: 16px; font-weight: 600; color: var(--text-muted); margin: 28px 0 8px; }
-    .prose p, .prose li { font-size: 14px; color: var(--text-muted); line-height: 1.7; margin-bottom: 8px; }
-    .prose ul { padding-left: 20px; }
-    .back-link { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--text-dim); margin-bottom: 32px; }
-    .back-link:hover { color: var(--text-muted); }
+    .prose {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 40px;
+      background: var(--bg-surface);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      color: var(--text);
+      line-height: 1.8;
+      font-size: 16px;
+    }
+    .prose h1 {
+      font-size: 42px;
+      margin-bottom: 24px;
+      color: var(--gold);
+      text-shadow: 0 0 20px var(--gold-glow);
+    }
+    .prose h2 {
+      font-size: 28px;
+      margin-top: 40px;
+      margin-bottom: 16px;
+      color: var(--gold);
+    }
+    .prose p, .prose li {
+      margin-bottom: 20px;
+      color: var(--text-muted);
+    }
+    .prose ul {
+      margin-left: 24px;
+      margin-bottom: 24px;
+      list-style-type: none;
+    }
+    .prose li {
+      margin-bottom: 12px;
+      position: relative;
+      padding-left: 20px;
+    }
+    .prose li::before {
+      content: "→";
+      position: absolute;
+      left: 0;
+      color: var(--gold);
+    }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--gold);
+      text-decoration: none;
+      margin-bottom: 32px;
+      font-size: 14px;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+    .back-link:hover {
+      color: var(--gold-lt);
+      transform: translateX(-4px);
+    }
   </style>
 </head>
 <body>
-  <nav id="navbar">
+  <nav id="navbar" class="animate-in">
     <div class="nav-brand">
       <a href="index.html" class="nav-logo" style="text-decoration:none">ORAN <span>DOLAR</span></a>
     </div>
   </nav>
 
-  <div class="prose">
+  <main class="animate-in" style="animation-delay: 0.1s">
+    <div class="prose">
     <a href="index.html" class="back-link">← Volver al inicio</a>
     <h1>Política de Privacidad</h1>
     <p>Última actualización: Abril 2026</p>
@@ -49,5 +105,6 @@
     <h2>Contacto</h2>
     <p>Para consultas sobre privacidad podés contactarnos a través del sitio.</p>
   </div>
+  </main>
 </body>
 </html>
