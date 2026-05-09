@@ -201,7 +201,7 @@ function buildRateCard({ key, label, flag, highlight }, rate) {
   const venta  = rate.venta  ? `<span class="price-value sell">$${formatARS(rate.venta)}</span>` : '';
 
   return `
-  <div class="rate-card${highlight ? ' highlight' : ''}">
+  <div class="rate-card${highlight ? ' highlight' : ''}" style="background: rgba(51, 65, 85, 0.80) !important;">
     <div class="card-header">
       <span class="card-name">${label}</span>
       <span class="card-flag">${flag}</span>
@@ -226,7 +226,7 @@ function buildRateCard({ key, label, flag, highlight }, rate) {
 function buildBOBCard(bob, arsPerBob) {
   const arsStr = arsPerBob ? formatNum(arsPerBob, 2) : '—';
   return `
-  <div class="rate-card highlight">
+  <div class="rate-card highlight" style="background: rgba(51, 65, 85, 0.80) !important; opacity: 1 !important;">
     <div class="card-header">
       <span class="card-name" style="color:var(--gold); font-weight:700">Boliviano (BOB)</span>
       <span class="card-flag">🇧🇴</span>
