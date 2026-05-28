@@ -888,6 +888,81 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   .rate-card { padding: 15px; }
 }
 
+/* ── FAQ Styles ── */
+.faq-container {
+  display: grid;
+  gap: 20px;
+}
+
+.faq-item {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.faq-question {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  background: var(--bg-surface-2);
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--text);
+  transition: background .2s;
+}
+
+.faq-question:hover {
+  background: var(--bg-surface-3);
+}
+
+.faq-question::after {
+  content: '+';
+  font-size: 20px;
+  font-weight: bold;
+  color: var(--gold);
+  transition: transform .3s;
+}
+
+.faq-item.open .faq-question::after {
+  transform: rotate(45deg);
+}
+
+.faq-answer {
+  display: none;
+  padding: 20px;
+  background: var(--bg-surface);
+  border-top: 1px solid var(--border);
+}
+
+.faq-item.open .faq-answer {
+  display: block;
+}
+
+.faq-answer p {
+  margin-bottom: 16px;
+  line-height: 1.7;
+  color: var(--text-muted);
+}
+
+.faq-answer p:last-child {
+  margin-bottom: 0;
+}
+
+/* Responsive for FAQ */
+@media (max-width: 768px) {
+  .faq-question {
+    padding: 14px 18px;
+    font-size: 14px;
+  }
+
+  .faq-answer {
+    padding: 18px;
+  }
+}
+
 /* ── Entrance Animations ── */
 @keyframes fadeInUp {
   from {

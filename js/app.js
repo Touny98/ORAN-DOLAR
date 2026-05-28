@@ -30,6 +30,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   initVanta();
   initNavbar();
   initAccordion();
+  initFAQAccordion();
   initConverter();
   renderCasasCambio();
   await fetchAll();
@@ -81,6 +82,16 @@ function initAccordion() {
   document.querySelectorAll('.accordion-header').forEach(header => {
     header.addEventListener('click', () => {
       const item = header.closest('.accordion-item');
+      item.classList.toggle('open');
+    });
+  });
+}
+
+/* ── FAQ Acordeón ── */
+function initFAQAccordion() {
+  document.querySelectorAll('.faq-question').forEach(question => {
+    question.addEventListener('click', () => {
+      const item = question.parentElement;
       item.classList.toggle('open');
     });
   });

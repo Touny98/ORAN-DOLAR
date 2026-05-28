@@ -101,10 +101,34 @@
               <h2>💵 Cotizaciones del Día</h2>
             </div>
             <div class="rates-grid rates-grid-compact" id="rates-grid">
-              <div class="rate-card"><div class="skeleton-line shimmer"></div><div class="skeleton-big shimmer" style="margin-top:10px"></div></div>
-              <div class="rate-card"><div class="skeleton-line shimmer"></div><div class="skeleton-big shimmer" style="margin-top:10px"></div></div>
-              <div class="rate-card"><div class="skeleton-line shimmer"></div><div class="skeleton-big shimmer" style="margin-top:10px"></div></div>
-              <div class="rate-card"><div class="skeleton-line shimmer"></div><div class="skeleton-big shimmer" style="margin-top:10px"></div></div>
+              <div class="rate-card">
+                <div class="rate-info">
+                  <span>Dólar Blue</span>
+                  <span class="rate-value">Cargando...</span>
+                </div>
+                <div class="rate-change">—</div>
+              </div>
+              <div class="rate-card">
+                <div class="rate-info">
+                  <span>Dólar Oficial</span>
+                  <span class="rate-value">Cargando...</span>
+                </div>
+                <div class="rate-change">—</div>
+              </div>
+              <div class="rate-card">
+                <div class="rate-info">
+                  <span>Dólar Cripto</span>
+                  <span class="rate-value">Cargando...</span>
+                </div>
+                <div class="rate-change">—</div>
+              </div>
+              <div class="rate-card">
+                <div class="rate-info">
+                  <span>Boliviano</span>
+                  <span class="rate-value">Cargando...</span>
+                </div>
+                <div class="rate-change">—</div>
+              </div>
             </div>
           </div>
 
@@ -117,15 +141,21 @@
               <div class="weather-card" id="weather-oran">
                 <div class="weather-city">🇦🇷 Orán, Salta</div>
                 <div class="weather-main">
-                  <div class="shimmer" style="width:40px;height:40px;border-radius:50%"></div>
-                  <div><div class="skeleton-big shimmer"></div></div>
+                  <div class="weather-icon">☀️</div>
+                  <div>
+                    <div class="weather-temp">Cargando...<span>°C</span></div>
+                    <div class="weather-desc">Actualizando...</div>
+                  </div>
                 </div>
               </div>
               <div class="weather-card" id="weather-bermejo">
                 <div class="weather-city">🇧🇴 Bermejo, Bolivia</div>
                 <div class="weather-main">
-                  <div class="shimmer" style="width:40px;height:40px;border-radius:50%"></div>
-                  <div><div class="skeleton-big shimmer"></div></div>
+                  <div class="weather-icon">☀️</div>
+                  <div>
+                    <div class="weather-temp">Cargando...<span>°C</span></div>
+                    <div class="weather-desc">Actualizando...</div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -144,19 +174,31 @@
                 </div>
                 <div class="converter-input-group">
                   <label for="conv-from">Desde</label>
-                  <select id="conv-from"></select>
+                  <select id="conv-from">
+                    <option value="ARS">ARS - Peso Argentino</option>
+                    <option value="USD">USD - Dólar Estadounidense</option>
+                    <option value="BOB">BOB - Boliviano</option>
+                    <option value="BTC">BTC - Bitcoin</option>
+                    <option value="ETH">ETH - Ethereum</option>
+                  </select>
                 </div>
                 <div class="converter-arrow">→</div>
                 <div class="converter-input-group">
                   <label for="conv-to">Hacia</label>
-                  <select id="conv-to"></select>
+                  <select id="conv-to">
+                    <option value="BOB">BOB - Boliviano</option>
+                    <option value="ARS">ARS - Peso Argentino</option>
+                    <option value="USD">USD - Dólar Estadounidense</option>
+                    <option value="BTC">BTC - Bitcoin</option>
+                    <option value="ETH">ETH - Ethereum</option>
+                  </select>
                 </div>
                 <div class="converter-result-group">
                   <label>Resultado</label>
-                  <div class="converter-result" id="conv-result">—</div>
+                  <div class="converter-result" id="conv-result">Calculando...</div>
                 </div>
               </div>
-              <p class="converter-note" id="conv-note"></p>
+              <p class="converter-note" id="conv-note">1 USD = Calculando... BOB</p>
             </div>
           </div>
 
@@ -327,14 +369,14 @@
             </div>
           </a>
         </div>
-        
+
         <div style="text-align: center;">
           <a href="blog/" style="display: inline-block; padding: 10px 24px; background: transparent; border: 1px solid var(--gold); color: var(--gold); text-decoration: none; border-radius: var(--radius-sm); font-weight: bold; transition: all 0.2s;">Ver todos los artículos →</a>
         </div>
       </div>
     </section>
 
-    <!-- ── ACERCA DE ORÁN DOLAR (SEO & AdSense) ── -->
+    <!-- ── ACERCA DE ÓRAN DOLAR (SEO & AdSense) ── -->
     <section id="sobre-nosotros" class="section animate-in" style="animation-delay: 0.6s; background: var(--bg-surface-2);">
       <div class="container">
         <div class="section-header">
@@ -344,10 +386,77 @@
         <div style="color: var(--text-muted); line-height: 1.8; max-width: 900px;">
           <p style="margin-bottom: 15px;"><strong>ORAN DOLAR</strong> es tu plataforma de referencia para conocer la cotización en tiempo real del dólar oficial, dólar blue, dólar MEP, CCL, cripto y el boliviano en la ciudad de <strong>Orán, Salta</strong>. Nuestra misión es brindar información financiera precisa y actualizada para comerciantes, viajeros y ciudadanos que realizan actividades en la dinámica frontera entre Argentina y Bermejo, Bolivia.</p>
           <p>Además de los tipos de cambio, proporcionamos herramientas útiles como un conversor de monedas integrado, información meteorológica de la zona, una guía completa con requisitos aduaneros y datos prácticos sobre el cruce en chalanas a través del Río Bermejo. En nuestro blog encontrarás artículos detallados sobre la economía local y consejos indispensables para tus compras.</p>
+
+          <h3>Nuestro Compromiso con la Calidad</h3>
+          <p>En ORAN DOLAR, nos comprometemos a proporcionar:</p>
+          <ul>
+            <li><strong>Datos precisos y actualizados:</strong> Nuestra información se actualiza cada 5 minutos mediante APIs confiables</li>
+            <li><strong>Transparencia total:</strong> Siempre citamos nuestras fuentes y explicamos cómo obtenemos los datos</li>
+            <li><strong>Enfoque local:</strong> Entendemos las necesidades específicas de la comunidad fronteriza entre Argentina y Bolivia</li>
+            <li><strong>Independencia:</strong> No estamos afiliados a ninguna entidad financiera o gubernamental</li>
+          </ul>
+
+          <h3>Nuestro Equipo</h3>
+          <p>Somos un equipo de desarrolladores, analistas financieros y residentes de la región que comprendemos la importancia de información precisa para tomar decisiones informadas sobre cambios de divisa y viajes fronterizos. Trabajamos constantemente para mejorar nuestros servicios basado en el feedback de nuestra comunidad.</p>
+
+          <h3>Cómo Verificamos Nuestros Datos</h3>
+          <p>Todas las cotizaciones mostradas en nuestro sitio provienen de fuentes verificadas y se comparan entre múltiples proveedores para asegurar consistencia. Cualquier discrepancia significativa se investiga antes de ser publicada.</p>
         </div>
       </div>
     </section>
 
+    <!-- ── SECCION DE PREGUNTAS FRECUENTES ── -->
+    <section id="faq" class="section" style="background: var(--bg-surface-2);">
+      <div class="container">
+        <div class="section-header">
+          <h2>Preguntas Frecuentes</h2>
+          <p>Respuestas a las dudas más comunes sobre el cambio de divisas y cruce fronterizo</p>
+        </div>
+        <div class="faq-container">
+          <div class="faq-item">
+            <h3 class="faq-question">¿Qué documentos necesito para cruzar de Argentina a Bolivia?</h3>
+            <div class="faq-answer">
+              <p>Para ciudadanos argentinos, el documento esencial es el DNI vigente. El pasaporte es opcional pero recomendado como respaldo. Si viaja con vehículo, necesitará additionally la documentación del auto (cédula, seguro, permiso de circulación).</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <h3 class="faq-question">¿Cuál es el límite de efectivo que puedo llevar sin declarar?</h3>
+            <div class="faq-answer">
+              <p>Puede llevar hasta USD 10,000 (o equivalente en otras monedas) sin necesidad de declarar en aduana. Montos superiores deben declararse pero no son ilegales, solo requieren completar un formulario de declaración.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <h3 class="faq-question">¿Cuál es el mejor día y hora para cruzar la frontera?</h3>
+            <div class="faq-answer">
+              <p>Los mejores días son martes a jueves, especialmente en la mañana (8:00-12:00 horas). Evite lunes, viernes y fines de semana cuando hay mayor congestión y tiempos de espera más largos.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <h3 class="faq-question">¿Qué productos están prohibidos llevar a Bolivia?</h3>
+            <div class="faq-answer">
+              <p>Están prohibidas frutas, verduras y carnes frescas sin certificado sanitario. También están prohibidas armas de fuego, drogas y ciertos productos sin los permisos adecuados. Consulte siempre con aduana antes de llevar productos regulados.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <h3 class="faq-question">¿Cómo funcionan los tipos de cambio que muestran en el sitio?</h3>
+            <div class="faq-answer">
+              <p>Mostramos tipos de cambio en tiempo actualizados cada 5 minutos provenant de múltiples fuentes confiables (DolarAPI, ExchangeRate-API, etc.). Los precios incluyen: dólar oficial, dólar blue, MEP, CCL, cripto (Bitcoin, Ethereum) y boliviano. Todas las fuentes se verifican cruzadamente para asegurar precisión.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <h3 class="faq-question">¿Necesito pasaporte para ir a Bolivia siendo argentino?</h3>
+            <div class="faq-answer">
+              <p>No, gracias al acuerdo MERCOSUR, los ciudadanos argentinos pueden ingresar a Bolivia solo con su DNI vigente. Sin embargo, llevar pasaporte nunca está de más como documento de respaldo en caso de que el DNI presente algún problema.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 
   <!-- ══ FOOTER ══ -->
@@ -372,7 +481,8 @@
         </div>
       </div>
     </div>
-  </footer>
+  </div>
+</footer>
 
   <!-- ══ TOAST CONTAINER ══ -->
   <div id="toast-container"></div>
