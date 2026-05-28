@@ -356,8 +356,8 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   font-size: 11px;
   letter-spacing: 0.5px;
 }
-.ad-slot-banner { height: 90px; margin: 20px 0; }
-.ad-slot-rect { height: 250px; }
+.ad-slot-banner { min-height: 90px; margin: 20px 0; }
+.ad-slot-rect { min-height: 250px; }
 
 .converter-widget {
   background: var(--bg-surface);
