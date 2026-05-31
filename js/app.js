@@ -391,3 +391,89 @@ function showToast(msg, type = '') {
   container.appendChild(toast);
   setTimeout(() => toast.remove(), 4000);
 }
+
+/* ── Noticias Locales ── */
+async function fetchLocalNews() {
+  const container = document.getElementById('news-container');
+  if (!container) return;
+
+  const RSS_URLS = [
+    'https://news.google.com/rss/search?q=Oran+Salta+noticias&hl=es-419&gl=AR&ceid=AR:es-419'
+  ];
+  
+  try {
+    let allNews = [];
+    
+    for (const url of RSS_URLS) {
+      const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(url)}`;
+      try {
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+        if (data.status === 'ok') {
+          const items = data.items.map(item => ({
+            title: item.title,
+            link: item.link,
+            pubDate: new Date(item.pubDate),
+            thumbnail: item.thumbnail || extractImageFromContent(item.content) || extractImageFromContent(item.description) || 'https://via.placeholder.com/400x200/05070a/facc15?text=Noticias+Locales',
+            source: data.feed.title || 'Diario Local'
+          }));
+          allNews = allNews.concat(items);
+        }
+      } catch (e) {
+        console.warn('Error fetching feed:', url, e);
+      }
+    }
+
+    if (allNews.length === 0) {
+      container.innerHTML = '<p style="color: var(--text-dim); text-align: center; width: 100%; grid-column: 1 / -1;">No se pudieron cargar las noticias en este momento.</p>';
+      return;
+    }
+
+    allNews.sort((a, b) => b.pubDate - a.pubDate);
+    const topNews = allNews.slice(0, 6);
+    
+    container.innerHTML = topNews.map(news => {
+      const timeAgo = timeSince(news.pubDate);
+      return `
+        <a href="${news.link}" target="_blank" rel="noopener noreferrer" class="news-card news-link">
+          <img src="${news.thumbnail}" alt="${news.title}" class="news-img" loading="lazy">
+          <div class="news-content">
+            <div class="news-source">${news.source}</div>
+            <div class="news-title">${news.title}</div>
+            <div class="news-meta">
+              <span>Hace ${timeAgo}</span>
+              <span>Leer más →</span>
+            </div>
+          </div>
+        </a>
+      `;
+    }).join('');
+
+  } catch (error) {
+    console.error('Error fetching news:', error);
+    container.innerHTML = '<p style="color: var(--text-dim); text-align: center; width: 100%; grid-column: 1 / -1;">Error al cargar las noticias.</p>';
+  }
+}
+
+function extractImageFromContent(content) {
+  if (!content) return null;
+  const div = document.createElement('div');
+  div.innerHTML = content;
+  const img = div.querySelector('img');
+  return img ? img.src : null;
+}
+
+function timeSince(date) {
+  const seconds = Math.floor((new Date() - date) / 1000);
+  let interval = seconds / 31536000;
+  if (interval > 1) return Math.floor(interval) + " años";
+  interval = seconds / 2592000;
+  if (interval > 1) return Math.floor(interval) + " meses";
+  interval = seconds / 86400;
+  if (interval > 1) return Math.floor(interval) + " días";
+  interval = seconds / 3600;
+  if (interval > 1) return Math.floor(interval) + " horas";
+  interval = seconds / 60;
+  if (interval > 1) return Math.floor(interval) + " min";
+  return Math.floor(seconds) + " seg";
+}
