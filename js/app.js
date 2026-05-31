@@ -412,6 +412,13 @@ const NEWS_SOURCES = [
   { name: 'Radio Guemes',      url: 'https://news.google.com/rss/search?q=site:radioguemes.com.ar&hl=es-419&gl=AR&ceid=AR:es-419',     icon: '📻' }
 ];
 
+/* Extrae la primera URL de imagen de un bloque HTML */
+function extractFirstImg(html) {
+  if (!html) return null;
+  const m = String(html).match(/<img[^>]+src=["']([^"']+)["']/i);
+  return (m && m[1] && m[1].startsWith('http')) ? m[1] : null;
+}
+
 /* Extrae og:image de una URL usando Microlink API, con caché en sessionStorage */
 async function fetchOgImage(articleUrl) {
   const key = 'ogimg_' + articleUrl;
@@ -420,7 +427,7 @@ async function fetchOgImage(articleUrl) {
   try {
     const resp = await fetch(
       `https://api.microlink.io/?url=${encodeURIComponent(articleUrl)}&meta=true`,
-      { signal: AbortSignal.timeout(6000) }
+      { signal: AbortSignal.timeout(4000) }
     );
     const data = await resp.json();
     const imgUrl = data?.data?.image?.url || DEFAULT_IMG;
@@ -446,12 +453,18 @@ async function fetchLocalNews() {
       const data = await resp.json();
       if (data.status === 'ok' && data.items && data.items.length > 0) {
         data.items.slice(0, 4).forEach(item => {
+          const thumbnail = item.thumbnail
+            || item.enclosure?.link
+            || extractFirstImg(item.description)
+            || extractFirstImg(item.content)
+            || null;
           allNews.push({
-            title:   item.title,
-            link:    item.link,
-            pubDate: new Date(item.pubDate),
-            source:  source.name,
-            icon:    source.icon
+            title:     item.title,
+            link:      item.link,
+            pubDate:   new Date(item.pubDate),
+            source:    source.name,
+            icon:      source.icon,
+            thumbnail: thumbnail
           });
         });
         fetched = true;
@@ -465,12 +478,18 @@ async function fetchLocalNews() {
         const json = await resp.json();
         const xml  = new DOMParser().parseFromString(json.contents, 'text/xml');
         Array.from(xml.querySelectorAll('item')).slice(0, 4).forEach(el => {
+          const mediaUrl = el.getElementsByTagName('media:content')[0]?.getAttribute('url')
+            || el.getElementsByTagNameNS('http://search.yahoo.com/mrss/', 'content')[0]?.getAttribute('url')
+            || el.querySelector('enclosure')?.getAttribute('url');
+          const descHtml = el.querySelector('description')?.textContent || '';
+          const thumbnail = mediaUrl || extractFirstImg(descHtml) || null;
           allNews.push({
-            title:   el.querySelector('title')?.textContent || '(Sin título)',
-            link:    el.querySelector('link')?.textContent  || '#',
-            pubDate: new Date(el.querySelector('pubDate')?.textContent || Date.now()),
-            source:  source.name,
-            icon:    source.icon
+            title:     el.querySelector('title')?.textContent || '(Sin título)',
+            link:      el.querySelector('link')?.textContent  || '#',
+            pubDate:   new Date(el.querySelector('pubDate')?.textContent || Date.now()),
+            source:    source.name,
+            icon:      source.icon,
+            thumbnail: thumbnail
           });
         });
       } catch (e) { console.warn('Feed fallido:', source.name, e); }
@@ -489,10 +508,10 @@ async function fetchLocalNews() {
 
   const top6 = allNews.slice(0, 6);
 
-  // Render inmediato con placeholder — las imágenes se cargan encima de forma asíncrona
+  // Render inmediato usando thumbnail del RSS si está disponible
   container.innerHTML = top6.map((n, i) => `
     <a href="${n.link}" target="_blank" rel="noopener noreferrer" class="news-card news-link">
-      <img src="${DEFAULT_IMG}" alt="${n.title.replace(/"/g, '')}" class="news-img" id="nimg-${i}" loading="lazy">
+      <img src="${n.thumbnail || DEFAULT_IMG}" alt="${n.title.replace(/"/g, '')}" class="news-img" id="nimg-${i}" loading="lazy" onerror="this.src='https://placehold.co/400x200/0d111a/facc15?text=Noticias'">
       <div class="news-content">
         <div class="news-source">${n.icon} ${n.source}</div>
         <div class="news-title">${n.title}</div>
@@ -504,15 +523,18 @@ async function fetchLocalNews() {
     </a>
   `).join('');
 
-  // Cargar og:image de cada artículo en paralelo y actualizar cada tarjeta
+  // Intentar Microlink solo para los artículos sin thumbnail (máx. 3 para respetar rate limits)
+  let microlinkCount = 0;
   top6.forEach((n, i) => {
-    fetchOgImage(n.link).then(imgUrl => {
-      const el = document.getElementById(`nimg-${i}`);
-      if (el) {
-        el.src = imgUrl;
-        el.onerror = () => { el.src = DEFAULT_IMG; };
-      }
-    });
+    if (!n.thumbnail && microlinkCount < 3) {
+      microlinkCount++;
+      fetchOgImage(n.link).then(imgUrl => {
+        if (imgUrl !== DEFAULT_IMG) {
+          const el = document.getElementById(`nimg-${i}`);
+          if (el) el.src = imgUrl;
+        }
+      });
+    }
   });
 }
 
