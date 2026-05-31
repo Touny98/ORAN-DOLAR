@@ -25,6 +25,17 @@ const CASAS = [
   // },
 ];
 
+/* ── Imagen por defecto para noticias ── */
+const DEFAULT_IMG = 'https://placehold.co/400x200/0d111a/facc15?text=Noticias';
+
+/* ── Helper para asegurar thumbnail válido ── */
+function getValidThumbnail(url) {
+  if (typeof url === 'string' && url.startsWith('http')) {
+    return url;
+  }
+  return DEFAULT_IMG;
+}
+
 /* ── Bootstrap ── */
 document.addEventListener('DOMContentLoaded', async () => {
   initCookieBanner();
@@ -395,7 +406,10 @@ function showToast(msg, type = '') {
 /* ── Noticias Locales ── */
 const NEWS_SOURCES = [
   { name: 'El Tribuno – Orán', url: 'https://news.google.com/rss/search?q=site:eltribuno.com+Orán&hl=es-419&gl=AR&ceid=AR:es-419', icon: '📰' },
-  { name: 'Noticias Orán',     url: 'https://news.google.com/rss/search?q=Orán+Salta&hl=es-419&gl=AR&ceid=AR:es-419',                icon: '🗞️' }
+  { name: 'Noticias Orán',     url: 'https://news.google.com/rss/search?q=Orán+Salta&hl=es-419&gl=AR&ceid=AR:es-419',                icon: '🗞️' },
+  { name: 'Radio Ciudad Orán', url: 'https://news.google.com/rss/search?q=site:radiociudadoran.com.ar&hl=es-419&gl=AR&ceid=AR:es-419', icon: '📻' },
+  { name: 'Diario El Oránense', url: 'https://news.google.com/rss/search?q=site:diarioeloranense.com.ar&hl=es-419&gl=AR&ceid=AR:es-419', icon: '🗞️' },
+  { name: 'Radio Guemes',      url: 'https://news.google.com/rss/search?q=site:radioguemes.com.ar&hl=es-419&gl=AR&ceid=AR:es-419',     icon: '📻' }
 ];
 
 async function fetchLocalNews() {
@@ -416,7 +430,7 @@ async function fetchLocalNews() {
           title:     item.title,
           link:      item.link,
           pubDate:   new Date(item.pubDate),
-          thumbnail: item.thumbnail || extractImageFromContent(item.content) || extractImageFromContent(item.description),
+          thumbnail: getValidThumbnail(item.thumbnail || extractImageFromContent(item.content) || extractImageFromContent(item.description)),
           source:    source.name,
           icon:      source.icon
         }));
@@ -437,7 +451,7 @@ async function fetchLocalNews() {
             title:     el.querySelector('title')?.textContent   || '(Sin título)',
             link:      el.querySelector('link')?.textContent    || '#',
             pubDate:   new Date(el.querySelector('pubDate')?.textContent || Date.now()),
-            thumbnail: enc?.getAttribute('url') || med?.getAttribute('url') || extractImageFromContent(el.querySelector('description')?.textContent),
+            thumbnail: getValidThumbnail(enc?.getAttribute('url') || med?.getAttribute('url') || extractImageFromContent(el.querySelector('description')?.textContent)),
             source:    source.name,
             icon:      source.icon
           });
@@ -460,7 +474,7 @@ async function fetchLocalNews() {
 
   container.innerHTML = allNews.slice(0, 6).map(n => `
     <a href="${n.link}" target="_blank" rel="noopener noreferrer" class="news-card news-link">
-      <img src="${n.thumbnail || DEFAULT_IMG}" alt="${n.title.replace(/"/g,'')}" class="news-img" loading="lazy" onerror="this.src='${DEFAULT_IMG}'">
+      <img src="${getValidThumbnail(n.thumbnail)}" alt="${n.title.replace(/"/g,'')}" class="news-img" loading="lazy" onerror="this.src='${DEFAULT_IMG}'">
       <div class="news-content">
         <div class="news-source">${n.icon} ${n.source}</div>
         <div class="news-title">${n.title}</div>
