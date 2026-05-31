@@ -430,7 +430,7 @@ async function fetchLocalNews() {
           title:     item.title,
           link:      item.link,
           pubDate:   new Date(item.pubDate),
-          thumbnail: null,
+          thumbnail: getValidThumbnail(item.thumbnail || extractImageFromContent(item.content) || extractImageFromContent(item.description)),
           source:    source.name,
           icon:      source.icon
         }));
@@ -445,11 +445,13 @@ async function fetchLocalNews() {
         const json = await resp.json();
         const xml  = new DOMParser().parseFromString(json.contents, 'text/xml');
         Array.from(xml.querySelectorAll('item')).slice(0, 4).forEach(el => {
+          const enc = el.querySelector('enclosure');
+          const med = el.getElementsByTagNameNS('*', 'thumbnail')[0] || el.getElementsByTagNameNS('*', 'content')[0];
           allNews.push({
             title:     el.querySelector('title')?.textContent   || '(Sin título)',
             link:      el.querySelector('link')?.textContent    || '#',
             pubDate:   new Date(el.querySelector('pubDate')?.textContent || Date.now()),
-            thumbnail: null,
+            thumbnail: getValidThumbnail(enc?.getAttribute('url') || med?.getAttribute('url') || extractImageFromContent(el.querySelector('description')?.textContent)),
             source:    source.name,
             icon:      source.icon
           });
@@ -472,6 +474,7 @@ async function fetchLocalNews() {
 
   container.innerHTML = allNews.slice(0, 6).map(n => `
     <a href="${n.link}" target="_blank" rel="noopener noreferrer" class="news-card news-link">
+      <img src="${getValidThumbnail(n.thumbnail)}" alt="${n.title.replace(/"/g,'')}" class="news-img" loading="lazy" onerror="this.src='${DEFAULT_IMG}'">
       <div class="news-content">
         <div class="news-source">${n.icon} ${n.source}</div>
         <div class="news-title">${n.title}</div>
