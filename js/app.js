@@ -393,87 +393,102 @@ function showToast(msg, type = '') {
 }
 
 /* ── Noticias Locales ── */
+const NEWS_SOURCES = [
+  { name: 'El Tribuno – Orán', url: 'https://news.google.com/rss/search?q=site:eltribuno.com+Orán&hl=es-419&gl=AR&ceid=AR:es-419', icon: '📰' },
+  { name: 'Noticias Orán',     url: 'https://news.google.com/rss/search?q=Orán+Salta&hl=es-419&gl=AR&ceid=AR:es-419',                icon: '🗞️' }
+];
+
 async function fetchLocalNews() {
   const container = document.getElementById('news-container');
   if (!container) return;
 
-  const RSS_URLS = [
-    'https://news.google.com/rss/search?q=Oran+Salta+noticias&hl=es-419&gl=AR&ceid=AR:es-419'
-  ];
-  
-  try {
-    let allNews = [];
-    
-    for (const url of RSS_URLS) {
-      const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(url)}`;
-      try {
-        const response = await fetch(apiUrl);
-        const data = await response.json();
-        if (data.status === 'ok') {
-          const items = data.items.map(item => ({
-            title: item.title,
-            link: item.link,
-            pubDate: new Date(item.pubDate),
-            thumbnail: item.thumbnail || extractImageFromContent(item.content) || extractImageFromContent(item.description) || 'https://via.placeholder.com/400x200/05070a/facc15?text=Noticias+Locales',
-            source: data.feed.title || 'Diario Local'
-          }));
-          allNews = allNews.concat(items);
-        }
-      } catch (e) {
-        console.warn('Error fetching feed:', url, e);
+  let allNews = [];
+
+  for (const source of NEWS_SOURCES) {
+    let fetched = false;
+
+    // Primer intento: rss2json
+    try {
+      const resp = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(source.url)}`);
+      const data = await resp.json();
+      if (data.status === 'ok' && data.items && data.items.length > 0) {
+        data.items.slice(0, 4).forEach(item => allNews.push({
+          title:     item.title,
+          link:      item.link,
+          pubDate:   new Date(item.pubDate),
+          thumbnail: item.thumbnail || extractImageFromContent(item.content) || extractImageFromContent(item.description),
+          source:    source.name,
+          icon:      source.icon
+        }));
+        fetched = true;
       }
+    } catch (e) { /* ignorar, probar siguiente */ }
+
+    // Fallback: allorigins + parseo XML nativo
+    if (!fetched) {
+      try {
+        const resp = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(source.url)}`);
+        const json = await resp.json();
+        const xml  = new DOMParser().parseFromString(json.contents, 'text/xml');
+        Array.from(xml.querySelectorAll('item')).slice(0, 4).forEach(el => {
+          const enc = el.querySelector('enclosure');
+          const med = el.getElementsByTagNameNS('*', 'thumbnail')[0] || el.getElementsByTagNameNS('*', 'content')[0];
+          allNews.push({
+            title:     el.querySelector('title')?.textContent   || '(Sin título)',
+            link:      el.querySelector('link')?.textContent    || '#',
+            pubDate:   new Date(el.querySelector('pubDate')?.textContent || Date.now()),
+            thumbnail: enc?.getAttribute('url') || med?.getAttribute('url') || extractImageFromContent(el.querySelector('description')?.textContent),
+            source:    source.name,
+            icon:      source.icon
+          });
+        });
+      } catch (e) { console.warn('Feed fallido:', source.name, e); }
     }
-
-    if (allNews.length === 0) {
-      container.innerHTML = '<p style="color: var(--text-dim); text-align: center; width: 100%; grid-column: 1 / -1;">No se pudieron cargar las noticias en este momento.</p>';
-      return;
-    }
-
-    allNews.sort((a, b) => b.pubDate - a.pubDate);
-    const topNews = allNews.slice(0, 6);
-    
-    container.innerHTML = topNews.map(news => {
-      const timeAgo = timeSince(news.pubDate);
-      return `
-        <a href="${news.link}" target="_blank" rel="noopener noreferrer" class="news-card news-link">
-          <img src="${news.thumbnail}" alt="${news.title}" class="news-img" loading="lazy">
-          <div class="news-content">
-            <div class="news-source">${news.source}</div>
-            <div class="news-title">${news.title}</div>
-            <div class="news-meta">
-              <span>Hace ${timeAgo}</span>
-              <span>Leer más →</span>
-            </div>
-          </div>
-        </a>
-      `;
-    }).join('');
-
-  } catch (error) {
-    console.error('Error fetching news:', error);
-    container.innerHTML = '<p style="color: var(--text-dim); text-align: center; width: 100%; grid-column: 1 / -1;">Error al cargar las noticias.</p>';
   }
+
+  if (allNews.length === 0) {
+    container.innerHTML = '<p style="color:var(--text-dim);text-align:center;grid-column:1/-1;padding:40px 0">No se pudieron cargar las noticias. Recargá la página.</p>';
+    return;
+  }
+
+  // Deduplicar y ordenar
+  const seen = new Set();
+  allNews = allNews.filter(n => { if (seen.has(n.title)) return false; seen.add(n.title); return true; });
+  allNews.sort((a, b) => b.pubDate - a.pubDate);
+
+  const DEFAULT_IMG = 'https://placehold.co/400x200/0d111a/facc15?text=Noticias';
+
+  container.innerHTML = allNews.slice(0, 6).map(n => `
+    <a href="${n.link}" target="_blank" rel="noopener noreferrer" class="news-card news-link">
+      <img src="${n.thumbnail || DEFAULT_IMG}" alt="${n.title.replace(/"/g,'')}" class="news-img" loading="lazy" onerror="this.src='${DEFAULT_IMG}'">
+      <div class="news-content">
+        <div class="news-source">${n.icon} ${n.source}</div>
+        <div class="news-title">${n.title}</div>
+        <div class="news-meta">
+          <span>Hace ${timeSince(n.pubDate)}</span>
+          <span>Leer más →</span>
+        </div>
+      </div>
+    </a>
+  `).join('');
 }
 
 function extractImageFromContent(content) {
   if (!content) return null;
-  const div = document.createElement('div');
-  div.innerHTML = content;
-  const img = div.querySelector('img');
-  return img ? img.src : null;
+  try {
+    const div = document.createElement('div');
+    div.innerHTML = content;
+    const img = div.querySelector('img');
+    return img ? img.src : null;
+  } catch { return null; }
 }
 
 function timeSince(date) {
-  const seconds = Math.floor((new Date() - date) / 1000);
-  let interval = seconds / 31536000;
-  if (interval > 1) return Math.floor(interval) + " años";
-  interval = seconds / 2592000;
-  if (interval > 1) return Math.floor(interval) + " meses";
-  interval = seconds / 86400;
-  if (interval > 1) return Math.floor(interval) + " días";
-  interval = seconds / 3600;
-  if (interval > 1) return Math.floor(interval) + " horas";
-  interval = seconds / 60;
-  if (interval > 1) return Math.floor(interval) + " min";
-  return Math.floor(seconds) + " seg";
+  const s = Math.floor((new Date() - date) / 1000);
+  if (s < 60)   return `${s} seg`;
+  if (s < 3600) return `${Math.floor(s/60)} min`;
+  if (s < 86400) return `${Math.floor(s/3600)} horas`;
+  if (s < 2592000) return `${Math.floor(s/86400)} días`;
+  if (s < 31536000) return `${Math.floor(s/2592000)} meses`;
+  return `${Math.floor(s/31536000)} años`;
 }
