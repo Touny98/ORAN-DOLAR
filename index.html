@@ -437,7 +437,7 @@
           <div class="faq-item">
             <h3 class="faq-question">¿Qué documentos necesito para cruzar de Argentina a Bolivia?</h3>
             <div class="faq-answer">
-              <p>Para ciudadanos argentinos, el documento esencial es el DNI vigente. El pasaporte es opcional pero recomendado como respaldo. Si viaja con vehículo, necesitará additionally la documentación del auto (cédula, seguro, permiso de circulación).</p>
+              <p>Para ciudadanos argentinos, el documento esencial es el DNI vigente. El pasaporte es opcional pero recomendado como respaldo. Si viaja con vehículo, necesitará también la documentación del auto (cédula, seguro, permiso de circulación).</p>
             </div>
           </div>
 
@@ -520,5 +520,86 @@
   </div>
 
   <script type="module" src="js/app.js"></script>
+
+  <!-- ══ DATOS ESTRUCTURADOS JSON-LD ══ -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://orandolar.com.ar/#organization",
+        "name": "ORAN DOLAR",
+        "url": "https://orandolar.com.ar",
+        "logo": "https://orandolar.com.ar/assets/og-image.png",
+        "description": "Plataforma de información para viajeros de la frontera Argentina-Bolivia en Orán, Salta.",
+        "areaServed": {
+          "@type": "Place",
+          "name": "Orán, Salta, Argentina"
+        },
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "contactType": "customer support",
+          "availableLanguage": "Spanish"
+        }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://orandolar.com.ar/#website",
+        "url": "https://orandolar.com.ar",
+        "name": "ORAN DOLAR",
+        "description": "Información útil para viajeros de la frontera Orán-Bermejo: cotizaciones, clima, aduanas y guías prácticas.",
+        "publisher": { "@id": "https://orandolar.com.ar/#organization" },
+        "inLanguage": "es-AR"
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://orandolar.com.ar/#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "¿Qué documentos necesito para cruzar de Argentina a Bolivia?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Para ciudadanos argentinos, el documento esencial es el DNI vigente. El pasaporte es opcional pero recomendado como respaldo. Si viaja con vehículo, necesitará la documentación del auto (cédula, seguro, permiso de circulación)."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "¿Cuál es el límite de efectivo que puedo llevar sin declarar?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Puede llevar hasta USD 10.000 (o equivalente en otras monedas) sin necesidad de declarar en aduana. Montos superiores deben declararse pero no son ilegales, solo requieren completar un formulario de declaración."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "¿Cuál es el mejor día y hora para cruzar la frontera?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Los mejores días son martes a jueves, especialmente en la mañana (8:00-12:00 horas). Evite lunes, viernes y fines de semana cuando hay mayor congestión y tiempos de espera más largos."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "¿Necesito pasaporte para ir a Bolivia siendo argentino?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No, gracias al acuerdo MERCOSUR, los ciudadanos argentinos pueden ingresar a Bolivia solo con su DNI vigente. Sin embargo, llevar pasaporte nunca está de más como documento de respaldo."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "¿Qué productos están prohibidos llevar a Bolivia?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Están prohibidas frutas, verduras y carnes frescas sin certificado sanitario. También están prohibidas armas de fuego, drogas y ciertos productos sin los permisos adecuados. Consulte siempre con aduana antes de llevar productos regulados."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
 </body>
 </html>
