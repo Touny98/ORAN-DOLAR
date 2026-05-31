@@ -30,7 +30,7 @@ const DEFAULT_IMG = 'https://placehold.co/400x200/0d111a/facc15?text=Noticias';
 
 /* ── Helper para asegurar thumbnail válido ── */
 function getValidThumbnail(url) {
-  if (typeof url === 'string' && url.startsWith('http')) {
+  if (typeof url === 'string' && url.trim() && url.startsWith('http')) {
     return url;
   }
   return DEFAULT_IMG;
@@ -426,14 +426,17 @@ async function fetchLocalNews() {
       const resp = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(source.url)}`);
       const data = await resp.json();
       if (data.status === 'ok' && data.items && data.items.length > 0) {
-        data.items.slice(0, 4).forEach(item => allNews.push({
-          title:     item.title,
-          link:      item.link,
-          pubDate:   new Date(item.pubDate),
-          thumbnail: getValidThumbnail(item.thumbnail || extractImageFromContent(item.content) || extractImageFromContent(item.description)),
-          source:    source.name,
-          icon:      source.icon
-        }));
+        data.items.slice(0, 4).forEach(item => {
+          const img = item.thumbnail || extractImageFromContent(item.content) || extractImageFromContent(item.description) || DEFAULT_IMG;
+          allNews.push({
+            title:     item.title,
+            link:      item.link,
+            pubDate:   new Date(item.pubDate),
+            thumbnail: getValidThumbnail(img),
+            source:    source.name,
+            icon:      source.icon
+          });
+        });
         fetched = true;
       }
     } catch (e) { /* ignorar, probar siguiente */ }
@@ -447,11 +450,12 @@ async function fetchLocalNews() {
         Array.from(xml.querySelectorAll('item')).slice(0, 4).forEach(el => {
           const enc = el.querySelector('enclosure');
           const med = el.getElementsByTagNameNS('*', 'thumbnail')[0] || el.getElementsByTagNameNS('*', 'content')[0];
+          const img = enc?.getAttribute('url') || med?.getAttribute('url') || extractImageFromContent(el.querySelector('description')?.textContent) || DEFAULT_IMG;
           allNews.push({
             title:     el.querySelector('title')?.textContent   || '(Sin título)',
             link:      el.querySelector('link')?.textContent    || '#',
             pubDate:   new Date(el.querySelector('pubDate')?.textContent || Date.now()),
-            thumbnail: getValidThumbnail(enc?.getAttribute('url') || med?.getAttribute('url') || extractImageFromContent(el.querySelector('description')?.textContent)),
+            thumbnail: getValidThumbnail(img),
             source:    source.name,
             icon:      source.icon
           });
