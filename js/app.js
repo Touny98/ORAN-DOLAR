@@ -34,6 +34,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   initFAQAccordion();
   initConverter();
   renderCasasCambio();
+  fetchLocalNews();
   await fetchAll();
   startAutoRefresh();
 });
