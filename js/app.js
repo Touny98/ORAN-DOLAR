@@ -412,6 +412,25 @@ const NEWS_SOURCES = [
   { name: 'Radio Guemes',      url: 'https://news.google.com/rss/search?q=site:radioguemes.com.ar&hl=es-419&gl=AR&ceid=AR:es-419',     icon: '📻' }
 ];
 
+/* Extrae og:image de una URL usando Microlink API, con caché en sessionStorage */
+async function fetchOgImage(articleUrl) {
+  const key = 'ogimg_' + articleUrl;
+  const cached = sessionStorage.getItem(key);
+  if (cached) return cached;
+  try {
+    const resp = await fetch(
+      `https://api.microlink.io/?url=${encodeURIComponent(articleUrl)}&meta=true`,
+      { signal: AbortSignal.timeout(6000) }
+    );
+    const data = await resp.json();
+    const imgUrl = data?.data?.image?.url || DEFAULT_IMG;
+    sessionStorage.setItem(key, imgUrl);
+    return imgUrl;
+  } catch {
+    return DEFAULT_IMG;
+  }
+}
+
 async function fetchLocalNews() {
   const container = document.getElementById('news-container');
   if (!container) return;
@@ -427,14 +446,12 @@ async function fetchLocalNews() {
       const data = await resp.json();
       if (data.status === 'ok' && data.items && data.items.length > 0) {
         data.items.slice(0, 4).forEach(item => {
-          const img = item.thumbnail || extractImageFromContent(item.content) || extractImageFromContent(item.description) || DEFAULT_IMG;
           allNews.push({
-            title:     item.title,
-            link:      item.link,
-            pubDate:   new Date(item.pubDate),
-            thumbnail: getValidThumbnail(img),
-            source:    source.name,
-            icon:      source.icon
+            title:   item.title,
+            link:    item.link,
+            pubDate: new Date(item.pubDate),
+            source:  source.name,
+            icon:    source.icon
           });
         });
         fetched = true;
@@ -448,16 +465,12 @@ async function fetchLocalNews() {
         const json = await resp.json();
         const xml  = new DOMParser().parseFromString(json.contents, 'text/xml');
         Array.from(xml.querySelectorAll('item')).slice(0, 4).forEach(el => {
-          const enc = el.querySelector('enclosure');
-          const med = el.getElementsByTagNameNS('*', 'thumbnail')[0] || el.getElementsByTagNameNS('*', 'content')[0];
-          const img = enc?.getAttribute('url') || med?.getAttribute('url') || extractImageFromContent(el.querySelector('description')?.textContent) || DEFAULT_IMG;
           allNews.push({
-            title:     el.querySelector('title')?.textContent   || '(Sin título)',
-            link:      el.querySelector('link')?.textContent    || '#',
-            pubDate:   new Date(el.querySelector('pubDate')?.textContent || Date.now()),
-            thumbnail: getValidThumbnail(img),
-            source:    source.name,
-            icon:      source.icon
+            title:   el.querySelector('title')?.textContent || '(Sin título)',
+            link:    el.querySelector('link')?.textContent  || '#',
+            pubDate: new Date(el.querySelector('pubDate')?.textContent || Date.now()),
+            source:  source.name,
+            icon:    source.icon
           });
         });
       } catch (e) { console.warn('Feed fallido:', source.name, e); }
@@ -474,11 +487,12 @@ async function fetchLocalNews() {
   allNews = allNews.filter(n => { if (seen.has(n.title)) return false; seen.add(n.title); return true; });
   allNews.sort((a, b) => b.pubDate - a.pubDate);
 
-  const DEFAULT_IMG = 'https://placehold.co/400x200/0d111a/facc15?text=Noticias';
+  const top6 = allNews.slice(0, 6);
 
-  container.innerHTML = allNews.slice(0, 6).map(n => `
+  // Render inmediato con placeholder — las imágenes se cargan encima de forma asíncrona
+  container.innerHTML = top6.map((n, i) => `
     <a href="${n.link}" target="_blank" rel="noopener noreferrer" class="news-card news-link">
-      <img src="${getValidThumbnail(n.thumbnail)}" alt="${n.title.replace(/"/g,'')}" class="news-img" loading="lazy" onerror="this.src='${DEFAULT_IMG}'">
+      <img src="${DEFAULT_IMG}" alt="${n.title.replace(/"/g, '')}" class="news-img" id="nimg-${i}" loading="lazy">
       <div class="news-content">
         <div class="news-source">${n.icon} ${n.source}</div>
         <div class="news-title">${n.title}</div>
@@ -489,16 +503,17 @@ async function fetchLocalNews() {
       </div>
     </a>
   `).join('');
-}
 
-function extractImageFromContent(content) {
-  if (!content) return null;
-  try {
-    const div = document.createElement('div');
-    div.innerHTML = content;
-    const img = div.querySelector('img');
-    return img ? img.src : null;
-  } catch { return null; }
+  // Cargar og:image de cada artículo en paralelo y actualizar cada tarjeta
+  top6.forEach((n, i) => {
+    fetchOgImage(n.link).then(imgUrl => {
+      const el = document.getElementById(`nimg-${i}`);
+      if (el) {
+        el.src = imgUrl;
+        el.onerror = () => { el.src = DEFAULT_IMG; };
+      }
+    });
+  });
 }
 
 function timeSince(date) {
