@@ -27,6 +27,7 @@ const CASAS = [
 
 /* ── Bootstrap ── */
 document.addEventListener('DOMContentLoaded', async () => {
+  initCookieBanner();
   initVanta();
   initNavbar();
   initAccordion();
@@ -37,10 +38,27 @@ document.addEventListener('DOMContentLoaded', async () => {
   startAutoRefresh();
 });
 
-function initVanta() {
-  if (typeof VANTA !== 'undefined') {
-    const isMobile = window.innerWidth < 768;
+function initCookieBanner() {
+  const banner = document.getElementById('cookie-banner');
+  const acceptBtn = document.getElementById('accept-cookies');
+  
+  if (banner && acceptBtn) {
+    if (!localStorage.getItem('cookiesAccepted')) {
+      banner.style.display = 'block';
+    }
     
+    acceptBtn.addEventListener('click', () => {
+      localStorage.setItem('cookiesAccepted', 'true');
+      banner.style.display = 'none';
+    });
+  }
+}
+
+function initVanta() {
+  const isMobile = window.innerWidth < 768;
+  if (isMobile) return; // No cargar canvas 3D en móviles para optimizar Core Web Vitals (AdSense)
+
+  if (typeof VANTA !== 'undefined') {
     const vantaInstance = VANTA.NET({
       el: "#vanta-bg",
       mouseControls: true,
@@ -52,9 +70,9 @@ function initVanta() {
       scaleMobile: 1.00,
       color: 0xfacc15,
       backgroundColor: 0x05070a,
-      points: isMobile ? 7.00 : 12.00,
-      maxDistance: isMobile ? 16.00 : 22.00,
-      spacing: isMobile ? 22.00 : 16.00
+      points: 12.00,
+      maxDistance: 22.00,
+      spacing: 16.00
     });
 
     window.addEventListener('resize', () => {
