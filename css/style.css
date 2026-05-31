@@ -3,9 +3,9 @@
 /* ── Variables ── */
 :root {
   --bg-base:       #05070a;
-  --bg-surface:    rgba(51, 65, 85, 0.80);
-  --bg-surface-2:  rgba(71, 85, 105, 0.85);
-  --bg-surface-3:  rgba(100, 116, 139, 0.90);
+  --bg-surface:    rgba(51, 65, 85, 0.90);
+  --bg-surface-2:  rgba(71, 85, 105, 0.95);
+  --bg-surface-3:  rgba(100, 116, 139, 1.00);
   --gold:          #facc15;
   --gold-glow:     rgba(250, 204, 21, 0.3);
   --gold-lt:       #fde047;
