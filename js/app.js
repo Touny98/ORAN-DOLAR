@@ -405,14 +405,21 @@ function showToast(msg, type = '') {
   setTimeout(() => toast.remove(), 4000);
 }
 
-/* ── Noticias Locales ── */
+/* ── Noticias Locales ──
+ * Usamos los feeds RSS DIRECTOS de El Tribuno (diario principal de Salta).
+ * A diferencia de Google News RSS —que no incluye imágenes y entrega enlaces
+ * redirigidos imposibles de resolver— estos feeds traen una <enclosure> con la
+ * imagen real del artículo y el enlace directo a la nota. */
 const NEWS_SOURCES = [
-  { name: 'El Tribuno – Orán', url: 'https://news.google.com/rss/search?q=site:eltribuno.com+Orán&hl=es-419&gl=AR&ceid=AR:es-419', icon: '📰' },
-  { name: 'Noticias Orán',     url: 'https://news.google.com/rss/search?q=Orán+Salta&hl=es-419&gl=AR&ceid=AR:es-419',                icon: '🗞️' },
-  { name: 'Radio Ciudad Orán', url: 'https://news.google.com/rss/search?q=site:radiociudadoran.com.ar&hl=es-419&gl=AR&ceid=AR:es-419', icon: '📻' },
-  { name: 'Diario El Oránense', url: 'https://news.google.com/rss/search?q=site:diarioeloranense.com.ar&hl=es-419&gl=AR&ceid=AR:es-419', icon: '🗞️' },
-  { name: 'Radio Guemes',      url: 'https://news.google.com/rss/search?q=site:radioguemes.com.ar&hl=es-419&gl=AR&ceid=AR:es-419',     icon: '📻' }
+  { name: 'El Tribuno – Salta', url: 'https://www.eltribuno.com/salta/feed', icon: '📰' },
+  { name: 'El Tribuno',         url: 'https://www.eltribuno.com/feed',       icon: '🗞️' }
 ];
+
+/* Decodifica entidades HTML básicas en una URL (ej: &amp; -> &) */
+function decodeUrl(url) {
+  if (typeof url !== 'string') return url;
+  return url.replace(/&amp;/g, '&').replace(/&#38;/g, '&');
+}
 
 /* Extrae la primera URL de imagen de un bloque HTML */
 function extractFirstImg(html) {
@@ -454,8 +461,8 @@ async function fetchLocalNews() {
       const resp = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(source.url)}`);
       const data = await resp.json();
       if (data.status === 'ok' && data.items && data.items.length > 0) {
-        data.items.slice(0, 4).forEach(item => {
-          const thumbnail = item.thumbnail
+        data.items.slice(0, 10).forEach(item => {
+          const rawThumb = item.thumbnail
             || item.enclosure?.link
             || extractFirstImg(item.description)
             || extractFirstImg(item.content)
@@ -466,7 +473,7 @@ async function fetchLocalNews() {
             pubDate:   new Date(item.pubDate),
             source:    source.name,
             icon:      source.icon,
-            thumbnail: thumbnail
+            thumbnail: rawThumb ? decodeUrl(rawThumb) : null
           });
         });
         fetched = true;
@@ -479,12 +486,13 @@ async function fetchLocalNews() {
         const resp = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(source.url)}`);
         const json = await resp.json();
         const xml  = new DOMParser().parseFromString(json.contents, 'text/xml');
-        Array.from(xml.querySelectorAll('item')).slice(0, 4).forEach(el => {
+        Array.from(xml.querySelectorAll('item')).slice(0, 10).forEach(el => {
           const mediaUrl = el.getElementsByTagName('media:content')[0]?.getAttribute('url')
             || el.getElementsByTagNameNS('http://search.yahoo.com/mrss/', 'content')[0]?.getAttribute('url')
             || el.querySelector('enclosure')?.getAttribute('url');
           const descHtml = el.querySelector('description')?.textContent || '';
-          const thumbnail = mediaUrl || extractFirstImg(descHtml) || null;
+          const rawThumb = mediaUrl || extractFirstImg(descHtml) || null;
+          const thumbnail = rawThumb ? decodeUrl(rawThumb) : null;
           allNews.push({
             title:     el.querySelector('title')?.textContent || '(Sin título)',
             link:      el.querySelector('link')?.textContent  || '#',
@@ -503,10 +511,19 @@ async function fetchLocalNews() {
     return;
   }
 
-  // Deduplicar y ordenar
+  // Deduplicar
   const seen = new Set();
   allNews = allNews.filter(n => { if (seen.has(n.title)) return false; seen.add(n.title); return true; });
-  allNews.sort((a, b) => b.pubDate - a.pubDate);
+
+  // Ordenar: primero las notas de secciones regionales (Salta/Orán/policiales),
+  // luego por fecha de publicación más reciente.
+  const isLocal = link => /\/(salta|oran|orán|policiales|judiciales)\//i.test(link || '');
+  allNews.sort((a, b) => {
+    const la = isLocal(a.link) ? 1 : 0;
+    const lb = isLocal(b.link) ? 1 : 0;
+    if (la !== lb) return lb - la;
+    return b.pubDate - a.pubDate;
+  });
 
   const top6 = allNews.slice(0, 6);
 
