@@ -25,8 +25,10 @@ const CASAS = [
   // },
 ];
 
-/* ── Imagen por defecto para noticias ── */
-const DEFAULT_IMG = 'https://placehold.co/400x200/0d111a/facc15?text=Noticias';
+/* ── Imagen por defecto para noticias (SVG embebido, sin dependencias externas) ── */
+const DEFAULT_IMG = "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='400'%20height='200'%3E%3Crect%20width='400'%20height='200'%20fill='%230d111a'/%3E%3Ctext%20x='200'%20y='96'%20font-family='Arial,sans-serif'%20font-size='26'%20font-weight='bold'%20fill='%23facc15'%20text-anchor='middle'%3EORAN%20DOLAR%3C/text%3E%3Ctext%20x='200'%20y='124'%20font-family='Arial,sans-serif'%20font-size='13'%20fill='%2394a3b8'%20text-anchor='middle'%3ENoticias%20de%20la%20frontera%3C/text%3E%3C/svg%3E";
+/* Expuesto globalmente para el manejador onerror de las imágenes */
+window.NEWS_FALLBACK_IMG = DEFAULT_IMG;
 
 /* ── Helper para asegurar thumbnail válido ── */
 function getValidThumbnail(url) {
@@ -511,7 +513,7 @@ async function fetchLocalNews() {
   // Render inmediato usando thumbnail del RSS si está disponible
   container.innerHTML = top6.map((n, i) => `
     <a href="${n.link}" target="_blank" rel="noopener noreferrer" class="news-card news-link">
-      <img src="${n.thumbnail || DEFAULT_IMG}" alt="${n.title.replace(/"/g, '')}" class="news-img" id="nimg-${i}" loading="lazy" onerror="this.src='https://placehold.co/400x200/0d111a/facc15?text=Noticias'">
+      <img src="${n.thumbnail || DEFAULT_IMG}" alt="${n.title.replace(/"/g, '')}" class="news-img" id="nimg-${i}" loading="lazy" onerror="this.onerror=null;this.src=window.NEWS_FALLBACK_IMG">
       <div class="news-content">
         <div class="news-source">${n.icon} ${n.source}</div>
         <div class="news-title">${n.title}</div>
