@@ -84,8 +84,8 @@ function initVanta() {
       scaleMobile: 1.00,
       color: 0xfacc15,
       backgroundColor: 0x05070a,
-      points: 12.00,
-      maxDistance: 22.00,
+      points: 6.00,
+      maxDistance: 11.00,
       spacing: 16.00
     });
 
