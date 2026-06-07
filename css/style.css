@@ -82,6 +82,13 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 700;
   letter-spacing: -0.02em;
 }
+
+h2, h3 {
+  background: rgba(100, 116, 139, 0.35);
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  display: inline-block;
+}
 a { color: var(--gold); text-decoration: none; transition: color 0.2s, opacity 0.2s; }
 a:hover { color: var(--gold-lt); opacity: 0.9; }
 button { cursor: pointer; border: none; background: none; font-family: inherit; }
@@ -221,9 +228,12 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   font-size: 20px;
   font-weight: 600;
   color: var(--text);
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 8px;
+  background: rgba(100, 116, 139, 0.35);
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
 }
 .section-header h2::after {
   content: '';
@@ -233,13 +243,48 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   border-radius: 2px;
   margin-left: 4px;
 }
-.section-header p { color: var(--text-muted); font-size: 13px; margin-top: 4px; }
+.section-header p {
+  color: var(--text-muted);
+  font-size: 13px;
+  margin-top: 4px;
+  background: rgba(100, 116, 139, 0.3);
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  display: inline-block;
+}
 
 /* ── Rate Cards Grid ── */
 .rates-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 14px;
+}
+
+/* Rate Info styling for cotizaciones */
+.rate-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.rate-info > span:first-child {
+  background: rgba(100, 116, 139, 0.4);
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.rate-info > .rate-value {
+  background: rgba(100, 116, 139, 0.35);
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--gold);
 }
 
 /* ── Rate Card ── */
@@ -755,6 +800,10 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   display: flex;
   align-items: center;
   gap: 6px;
+  background: rgba(100, 116, 139, 0.35) !important;
+  padding: 8px 12px !important;
+  border-radius: var(--radius-sm) !important;
+  display: inline-flex !important;
 }
 .section-header-sm h2::after {
   content: '';
