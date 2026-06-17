@@ -28,7 +28,7 @@ function initDotCanvas() {
   const SPACING  = 32;
   const R        = 1.5;
   const BASE_OP  = 0.155;
-  const PEAK_OP  = 0.30;
+  const PEAK_OP  = 0.40;
   const INFLUENCE = 130;
 
   let mouse = { x: -9999, y: -9999 };
