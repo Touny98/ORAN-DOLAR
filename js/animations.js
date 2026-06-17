@@ -87,41 +87,69 @@ function initDotCanvas() {
 
 /* ── 2. SCROLL REVEALS ─────────────────────────────────────── */
 
+const REVEAL_EASING  = 'cubic-bezier(0.16, 1, 0.3, 1)';
+const REVEAL_STAGGER = IS_TOUCH ? 45 : 55;
+const REVEAL_MAX     = 8;
+const CHILD_SEL      = '.section-header, .rate-card, .news-card, .home-post-card, .casa-card, .accordion-item, .faq-item';
+
+function getRevealChildren(section) {
+  return [...section.querySelectorAll(CHILD_SEL)].slice(0, REVEAL_MAX);
+}
+
 function initScrollReveals() {
-  const targets = document.querySelectorAll('[data-reveal]');
-  if (!targets.length) return;
+  const sections = document.querySelectorAll('[data-reveal]');
+  if (!sections.length) return;
 
   if (REDUCED) {
-    /* Sin animaciones: mostrar todo directamente */
-    targets.forEach(el => {
-      el.style.opacity   = '1';
-      el.style.transform = 'none';
-    });
+    sections.forEach(el => { el.style.opacity = '1'; el.style.transform = 'none'; });
     return;
   }
 
-  const Y = IS_TOUCH ? '10px' : '16px';
-  targets.forEach(el => {
-    el.style.opacity   = '0';
-    el.style.transform = `translateY(${Y})`;
+  /* Pre-ocultar secciones y sus hijos estáticos */
+  sections.forEach(section => {
+    section.style.opacity   = '0';
+    section.style.transition = 'opacity 0.25s ease';
+
+    getRevealChildren(section).forEach(child => {
+      const isHeader = child.classList.contains('section-header');
+      const dur      = isHeader ? 350 : 500;
+      const dy       = isHeader ? 8 : (IS_TOUCH ? 10 : 12);
+      child.style.opacity   = '0';
+      child.style.transform = `translateY(${dy}px)`;
+      child.style.transition = `opacity ${dur}ms ${REVEAL_EASING}, transform ${dur}ms ${REVEAL_EASING}`;
+    });
   });
 
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (!entry.isIntersecting) return;
       observer.unobserve(entry.target);
-      revealElement(entry.target);
+      revealSection(entry.target);
     });
-  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+  }, { threshold: 0.06, rootMargin: '0px 0px -30px 0px' });
 
-  targets.forEach(el => observer.observe(el));
+  sections.forEach(el => observer.observe(el));
 }
 
-function revealElement(el) {
-  el.classList.add('reveal-ready');
-  void el.offsetHeight; /* force reflow so transition applies */
-  el.classList.add('reveal-visible');
-  setTimeout(() => { el.style.willChange = 'auto'; }, 600);
+function revealSection(section) {
+  /* 1. Sección: fade rápido */
+  section.style.opacity = '1';
+
+  /* 2. Hijos: cascada con stagger */
+  getRevealChildren(section).forEach((child, i) => {
+    setTimeout(() => {
+      child.style.opacity   = '1';
+      child.style.transform = 'translateY(0)';
+    }, 60 + i * REVEAL_STAGGER);
+  });
+
+  /* 3. Hijos extra (>MAX): mostrar sin animación */
+  [...section.querySelectorAll(CHILD_SEL)].slice(REVEAL_MAX).forEach(child => {
+    child.style.opacity   = '1';
+    child.style.transform = 'none';
+  });
+
+  setTimeout(() => { section.style.willChange = 'auto'; }, 800);
 }
 
 /* ── 3. NUMBER COUNTER ─────────────────────────────────────── */
