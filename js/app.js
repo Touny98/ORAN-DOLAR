@@ -1,6 +1,7 @@
 import { fetchDolarRates, fetchBOBRate, formatARS, formatNum, timeAgo } from './api.js';
 import { fetchWeather, shouldShowRainAlert, buildAlertMessage } from './weather.js';
 import { setRates, convert, getCurrencyOptions, resultDecimals } from './converter.js';
+import { initAnimations, animateRateCards } from './animations.js';
 
 /* ── Estado global ── */
 let lastRates   = null;
@@ -41,7 +42,7 @@ function getValidThumbnail(url) {
 /* ── Bootstrap ── */
 document.addEventListener('DOMContentLoaded', async () => {
   initCookieBanner();
-  initVanta();
+  initAnimations();
   initNavbar();
   initAccordion();
   initFAQAccordion();
@@ -237,6 +238,8 @@ function renderRateCards(rates, bob) {
     if (!rate) continue;
     grid.insertAdjacentHTML('beforeend', buildRateCard(cfg, rate));
   }
+
+  animateRateCards(grid);
 }
 
 function buildRateCard({ key, label, flag, highlight }, rate) {
