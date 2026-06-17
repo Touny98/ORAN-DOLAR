@@ -189,11 +189,15 @@ export function animateRateCards(grid) {
 
   /* Stagger entry animation on each card */
   const STAGGER = IS_TOUCH ? 60 : 80;
+  const EASING  = 'cubic-bezier(0.22, 1, 0.36, 1)';
   grid.querySelectorAll('.rate-card').forEach((card, i) => {
-    card.style.opacity   = '0';
-    card.style.transform = 'translateY(12px)';
-    card.classList.add('reveal-ready');
-    setTimeout(() => card.classList.add('reveal-visible'), i * STAGGER);
+    card.style.opacity    = '0';
+    card.style.transform  = 'translateY(12px)';
+    card.style.transition = `opacity 0.5s ${EASING}, transform 0.5s ${EASING}`;
+    setTimeout(() => {
+      card.style.opacity   = '1';
+      card.style.transform = 'translateY(0)';
+    }, i * STAGGER);
   });
 
   /* Counter animation on buy/sell values */
