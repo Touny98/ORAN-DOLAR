@@ -1,147 +1,60 @@
 ﻿﻿<!DOCTYPE html>
 <html lang="es">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-2KX9VPYS96"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-2KX9VPYS96');
-</script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Blog – ORAN DOLAR</title>
-  <meta name="description" content="Lee nuestros artículos sobre viajes a Bermejo, aduana, cotizaciones, y vida en la frontera Argentina-Bolivia." />
-  <meta name="theme-color" content="#0a0e1a" />
-  <meta name="google-adsense-account" content="ca-pub-2924479933552579">
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#ffffff" />
 
-  <!-- Open Graph -->
-  <meta property="og:title" content="Blog – ORAN DOLAR" />
-  <meta property="og:description" content="Artículos informativos sobre viajes, aduana y cotizaciones en la frontera." />
+  <title>Guías de la frontera Orán–Bermejo – ORAN DOLAR</title>
+  <meta name="description" content="20 guías escritas desde Orán sobre cruzar a Bermejo: documentación, chalana, aduana, qué comprar, cambio de dinero y vida cotidiana de la frontera." />
+  <meta name="author" content="Augusto Castro" />
+  <meta name="google-adsense-account" content="ca-pub-2924479933552579" />
+
+  <meta property="og:title" content="Guías de la frontera Orán–Bermejo" />
+  <meta property="og:description" content="20 artículos prácticos y culturales sobre la frontera Argentina-Bolivia." />
   <meta property="og:type" content="website" />
 
   <link rel="canonical" href="https://orandolar.com.ar/blog/" />
-  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="icon" type="image/png" href="../assets/og-image.png" />
+  <link rel="stylesheet" href="../css/style.css?v=3.0" />
 
-  <!-- Google AdSense -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2KX9VPYS96"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-2KX9VPYS96');
+  </script>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2924479933552579" crossorigin="anonymous"></script>
 
   <style>
-    .blog-header {
-      text-align: center;
-      margin-bottom: 64px;
-    }
-    .blog-header h1 {
-      font-size: 48px;
-      color: var(--gold);
-      margin-bottom: 16px;
-      text-shadow: 0 0 30px var(--gold-glow);
-    }
-    .blog-header p {
-      font-size: 20px;
-      color: var(--text-muted);
-      max-width: 600px;
-      margin: 0 auto;
-      line-height: 1.5;
-    }
-    .blog-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 32px;
-      margin-bottom: 60px;
-    }
+    .blog-header { text-align: left; margin: 32px 0 40px; max-width: 720px; }
+    .blog-header h1 { font-size: 38px; color: var(--text); margin-bottom: 12px; letter-spacing: -0.02em; }
+    .blog-header p { font-size: 17px; color: var(--text-muted); line-height: 1.6; }
+    .blog-category-title { font-size: 14px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-muted); margin: 40px 0 16px; font-weight: 700; }
+    .blog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 22px; margin-bottom: 48px; }
     .blog-card {
-      background: var(--bg-surface);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      background: var(--bg-base);
       border: 1px solid var(--border);
       border-radius: var(--radius);
       overflow: hidden;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: var(--shadow);
+      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
       display: flex;
       flex-direction: column;
     }
-    .blog-card:hover {
-      border-color: var(--gold);
-      transform: translateY(-8px);
-      background: var(--bg-surface-2);
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
-    }
-    .blog-card-header {
-      height: 200px;
-      border-bottom: 1px solid var(--border);
-      overflow: hidden;
-    }
-    .blog-card-header img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      transition: transform 0.4s ease;
-    }
-    .blog-card:hover .blog-card-header img {
-      transform: scale(1.05);
-    }
-    .blog-card-content {
-      padding: 32px;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
-    .blog-card h3 {
-      font-size: 22px;
-      color: var(--text);
-      margin-bottom: 16px;
-      line-height: 1.3;
-      min-height: 60px;
-    }
-    .blog-card p {
-      font-size: 14px;
-      color: var(--text-muted);
-      margin-bottom: 24px;
-      line-height: 1.6;
-      flex: 1;
-    }
-    .blog-card-meta {
-      font-size: 11px;
-      color: var(--text-dim);
-      margin-bottom: 20px;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      font-weight: 700;
-    }
-    .blog-card a {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      color: var(--gold);
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 14px;
-      transition: all 0.2s;
-    }
-    .blog-card a:hover {
-      color: var(--gold-lt);
-      gap: 12px;
-    }
-    .back-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      color: var(--gold);
-      text-decoration: none;
-      margin-bottom: 40px;
-      font-size: 14px;
-      font-weight: 600;
-      transition: all 0.2s;
-    }
-    .back-link:hover {
-      color: var(--gold-lt);
-      transform: translateX(-4px);
-    }
+    .blog-card:hover { border-color: var(--border-bright); transform: translateY(-3px); box-shadow: var(--shadow); }
+    .blog-card-header { height: 170px; border-bottom: 1px solid var(--border); overflow: hidden; background: var(--bg-surface); }
+    .blog-card-header img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.3s ease; }
+    .blog-card:hover .blog-card-header img { transform: scale(1.03); }
+    .blog-card-content { padding: 22px; flex: 1; display: flex; flex-direction: column; }
+    .blog-card h3 { font-size: 18px; color: var(--text); margin-bottom: 10px; line-height: 1.35; }
+    .blog-card p { font-size: 14px; color: var(--text-muted); margin-bottom: 16px; line-height: 1.55; flex: 1; }
+    .blog-card-meta { font-size: 11px; color: var(--text-dim); margin-bottom: 14px; text-transform: uppercase; letter-spacing: 0.6px; font-weight: 600; }
+    .blog-card a { display: inline-flex; align-items: center; gap: 6px; color: var(--accent); text-decoration: none; font-weight: 600; font-size: 13px; transition: gap 0.2s; }
+    .blog-card a:hover { gap: 10px; opacity: 1; }
+    .back-link { display: inline-block; color: var(--accent); text-decoration: none; margin: 24px 0 0; font-size: 13px; font-weight: 600; }
+    .back-link:hover { opacity: 0.7; }
   </style>
 </head>
 <body>
@@ -165,118 +78,226 @@
       <a href="../index.html" class="back-link">← Volver al inicio</a>
 
       <div class="blog-header">
-        <h1>Blog ORAN DOLAR</h1>
-        <p>Guías prácticas, consejos y todo lo que necesitás saber para viajar a Bermejo y cruzar la frontera Argentina-Bolivia</p>
+        <h1>Guías de la frontera Orán–Bermejo</h1>
+        <p>Artículos escritos desde Orán por gente que cruza la frontera. Documentación, dinero, aduana, qué comprar, cómo moverse, qué comer y cómo es la vida de un lado y del otro del río Bermejo.</p>
       </div>
 
-            <div class="blog-grid">
-        <!-- Artículo 1 -->
+      <!-- AdSense banner -->
+      <div class="ad-slot ad-slot-banner" style="margin-bottom: 32px;">
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-2924479933552579"
+             data-ad-slot="4567890123"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+      </div>
+
+      <h2 class="blog-category-title">Dinero & cotizaciones</h2>
+      <div class="blog-grid">
         <div class="blog-card">
           <div class="blog-card-header"><img src="../assets/Imagenes-blog/guia-de-cambio-en-bermejo.png" alt="Casas de cambio en Bermejo" loading="lazy" /></div>
           <div class="blog-card-content">
-            <h3>Cómo cambiar bolivianos en Bermejo: Guía completa</h3>
-            <p>Dónde y cómo cambiar dinero en Bermejo de forma segura, sin perder plata en el proceso.</p>
-            <div class="blog-card-meta">Mayo 2026 • 7 min de lectura</div>
-            <a href="guia-cambio-bolivianos-bermejo.html">Leer artículo →</a>
+            <h3>Cómo cambiar bolivianos en Bermejo</h3>
+            <p>Dónde y cómo cambiar dinero sin perder plata. Tres casas que conviene revisar antes de aceptar la primera tasa.</p>
+            <div class="blog-card-meta">Mayo 2026 • 7 min</div>
+            <a href="guia-cambio-bolivianos-bermejo.html">Leer guía →</a>
           </div>
         </div>
-
-        <!-- Artículo 2 -->
-        <div class="blog-card">
-          <div class="blog-card-header"><img src="../assets/Imagenes-blog/documentacion-necesaria-para-cruzar.png" alt="Documentación para cruzar la frontera" loading="lazy" /></div>
-          <div class="blog-card-content">
-            <h3>Documentación necesaria para cruzar la frontera en 2026</h3>
-            <p>DNI, pasaporte, y trámites aduanales. Qué papeles llevar para viajar sin problemas a Bolivia.</p>
-            <div class="blog-card-meta">Mayo 2026 • 6 min de lectura</div>
-            <a href="documentacion-cruzar-frontera.html">Leer artículo →</a>
-          </div>
-        </div>
-
-        <!-- Artículo 3 -->
-        <div class="blog-card">
-          <div class="blog-card-header"><img src="../assets/Imagenes-blog/mejores-dias-para-viajar.png" alt="Mejores días para viajar a Bermejo" loading="lazy" /></div>
-          <div class="blog-card-content">
-            <h3>Mejores días para viajar a Bermejo: Guía de horarios y tráfico</h3>
-            <p>Lunes vs. viernes, mañana vs. tarde. Estrategias para evitar colas en aduana y cruzar rápido.</p>
-            <div class="blog-card-meta">Mayo 2026 • 5 min de lectura</div>
-            <a href="mejores-dias-ir-bermejo.html">Leer artículo →</a>
-          </div>
-        </div>
-
-        <!-- Artículo 4 -->
-        <div class="blog-card">
-          <div class="blog-card-header"><img src="../assets/Imagenes-blog/que-comprar-en-bermejo.png" alt="Qué comprar en Bermejo" loading="lazy" /></div>
-          <div class="blog-card-content">
-            <h3>Qué comprar en Bermejo: Productos y precios imprescindibles</h3>
-            <p>Ropa, electrónica, cosméticos y más. Los mejores artículos para traer de Bolivia a Argentina.</p>
-            <div class="blog-card-meta">Mayo 2026 • 8 min de lectura</div>
-            <a href="que-comprar-en-bermejo.html">Leer artículo →</a>
-          </div>
-        </div>
-
-        <!-- Artículo 5 -->
         <div class="blog-card">
           <div class="blog-card-header"><img src="../assets/Imagenes-blog/dolar-blue-en-oran.png" alt="Dólar blue en Orán" loading="lazy" /></div>
           <div class="blog-card-content">
-            <h3>Dólar Blue en Orán: Análisis de la tendencia en 2026</h3>
-            <p>Qué es el dólar blue, cómo afecta a los viajeros en la frontera y qué tener en cuenta antes de cambiar.</p>
-            <div class="blog-card-meta">Mayo 2026 • 7 min de lectura</div>
-            <a href="cambio-dolar-blue-oran.html">Leer artículo →</a>
+            <h3>Dólar Blue en Orán: cómo afecta al viajero</h3>
+            <p>Qué es el dólar blue, por qué importa cuando cruzás a Bermejo y cómo medir si vale la pena cambiar antes o después de pasar.</p>
+            <div class="blog-card-meta">Mayo 2026 • 7 min</div>
+            <a href="cambio-dolar-blue-oran.html">Leer guía →</a>
           </div>
         </div>
-
-        <!-- Artículo 6 -->
         <div class="blog-card">
-          <div class="blog-card-header"><img src="../assets/Imagenes-blog/la-chalana-de-aguas-blancas.png" alt="La chalana de Aguas Blancas" loading="lazy" /></div>
+          <div class="blog-card-header"><img src="../assets/Imagenes-blog/tipo-de-cambio-bob-a-ars.png" alt="Boliviano a pesos" loading="lazy" /></div>
           <div class="blog-card-content">
-            <h3>La Chalana de Aguas Blancas: Historia, funcionamiento y horarios</h3>
-            <p>El cruce fluvial más icónico de la frontera. Cómo funciona la balsa y qué esperar.</p>
-            <div class="blog-card-meta">Mayo 2026 • 6 min de lectura</div>
-            <a href="chalana-aguas-blancas.html">Leer artículo →</a>
+            <h3>Boliviano a pesos: cómo calcular tu gasto</h3>
+            <p>Una hoja de ruta para presupuestar el día sin sorpresas. Conversiones reales con precios de Bermejo en mano.</p>
+            <div class="blog-card-meta">Mayo 2026 • 6 min</div>
+            <a href="tipo-cambio-boliviano-ars.html">Leer guía →</a>
           </div>
         </div>
-
-        <!-- Artículo 7 -->
         <div class="blog-card">
-          <div class="blog-card-header"><img src="../assets/Imagenes-blog/aduana-argentina(limites).png" alt="Aduana argentina límites de compra" loading="lazy" /></div>
+          <div class="blog-card-header"><img src="../assets/Imagenes-blog/guia-de-cambio-en-bermejo.png" alt="Presupuesto día en Bermejo" loading="lazy" /></div>
           <div class="blog-card-content">
-            <h3>Aduana Argentina: Qué se permite traer y límites de compra</h3>
-            <p>Franquicia de viajero, límites de efectivo, prohibiciones y sanciones aduanales en 2026.</p>
-            <div class="blog-card-meta">Mayo 2026 • 7 min de lectura</div>
-            <a href="tips-aduana-argentina.html">Leer artículo →</a>
+            <h3>Cuánto cuesta un día completo en Bermejo</h3>
+            <p>Combustible, chalana, almuerzo, dos compras típicas y el regreso. Lo que realmente sale de la billetera.</p>
+            <div class="blog-card-meta">Junio 2026 • 8 min</div>
+            <a href="presupuesto-viaje-bermejo.html">Leer guía →</a>
           </div>
         </div>
+      </div>
 
-        <!-- Artículo 8 -->
+      <h2 class="blog-category-title">Documentación & aduana</h2>
+      <div class="blog-grid">
         <div class="blog-card">
-          <div class="blog-card-header"><img src="../assets/Imagenes-blog/tipo-de-cambio-bob-a-ars.png" alt="Conversión boliviano a pesos argentinos" loading="lazy" /></div>
+          <div class="blog-card-header"><img src="../assets/Imagenes-blog/documentacion-necesaria-para-cruzar.png" alt="Documentación para cruzar" loading="lazy" /></div>
           <div class="blog-card-content">
-            <h3>Boliviano a Pesos: Cómo calcular cuánto vas a gastar en Bermejo</h3>
-            <p>Guía práctica para entender el valor del boliviano y planificar tu presupuesto de viaje sin sorpresas.</p>
-            <div class="blog-card-meta">Mayo 2026 • 6 min de lectura</div>
-            <a href="tipo-cambio-boliviano-ars.html">Leer artículo →</a>
+            <h3>Documentación para cruzar a Bolivia</h3>
+            <p>DNI, pasaporte, papeles del auto y la pregunta menos obvia: ¿qué pasa si llevás a un menor que no es hijo tuyo?</p>
+            <div class="blog-card-meta">Mayo 2026 • 6 min</div>
+            <a href="documentacion-cruzar-frontera.html">Leer guía →</a>
           </div>
         </div>
-
-        <!-- Artículo 9 -->
         <div class="blog-card">
-          <div class="blog-card-header"><img src="../assets/Imagenes-blog/como-viajar-de-oran-a-bermejo.png" alt="Cómo viajar de Orán a Bermejo" loading="lazy" /></div>
+          <div class="blog-card-header"><img src="../assets/Imagenes-blog/aduana-argentina(limites).png" alt="Aduana argentina límites" loading="lazy" /></div>
           <div class="blog-card-content">
-            <h3>Cómo viajar de Orán a Bermejo: Guía paso a paso</h3>
-            <p>Rutas, medios de transporte, tiempos estimados y consejos prácticos para el viaje.</p>
-            <div class="blog-card-meta">Mayo 2026 • 8 min de lectura</div>
-            <a href="como-viajar-oran-bermejo.html">Leer artículo →</a>
+            <h3>Aduana argentina: qué se permite traer</h3>
+            <p>Franquicia de viajero, USD 300, electrónica nueva, comida. Lo que conviene declarar y lo que es mejor no llevar.</p>
+            <div class="blog-card-meta">Mayo 2026 • 7 min</div>
+            <a href="tips-aduana-argentina.html">Leer guía →</a>
           </div>
         </div>
-
-        <!-- Artículo 10 -->
         <div class="blog-card">
-          <div class="blog-card-header"><img src="../assets/Imagenes-blog/mercado-central-de-bermejo.png" alt="Mercado Central de Bermejo" loading="lazy" /></div>
+          <div class="blog-card-header"><img src="../assets/Imagenes-blog/documentacion-necesaria-para-cruzar.png" alt="Viajar con niños" loading="lazy" /></div>
           <div class="blog-card-content">
-            <h3>Mercado Central de Bermejo: Guía turística y comercial</h3>
-            <p>Qué encontrar, dónde comprar, seguridad y tips para aprovechar la visita al mercado.</p>
-            <div class="blog-card-meta">Mayo 2026 • 7 min de lectura</div>
-            <a href="mercado-bermejo-guia.html">Leer artículo →</a>
+            <h3>Viajar con niños a Bermejo</h3>
+            <p>Autorización del otro progenitor, partida de nacimiento, qué pide migraciones cuando viaja solo uno de los padres.</p>
+            <div class="blog-card-meta">Junio 2026 • 7 min</div>
+            <a href="viajar-con-ninos-bermejo.html">Leer guía →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- AdSense rectángulo intermedio -->
+      <div class="ad-slot ad-slot-rect" style="max-width: 336px; margin: 32px auto;">
+        <ins class="adsbygoogle"
+             style="display:inline-block;width:336px;height:280px"
+             data-ad-client="ca-pub-2924479933552579"
+             data-ad-slot="5678901234"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+      </div>
+
+      <h2 class="blog-category-title">Cómo cruzar: chalana, ruta y transporte</h2>
+      <div class="blog-grid">
+        <div class="blog-card">
+          <div class="blog-card-header"><img src="../assets/Imagenes-blog/como-viajar-de-oran-a-bermejo.png" alt="Cómo viajar Orán Bermejo" loading="lazy" /></div>
+          <div class="blog-card-content">
+            <h3>Cómo viajar de Orán a Bermejo</h3>
+            <p>Ruta 50, Aguas Blancas, chalana y aduana boliviana. El paso a paso con tiempos reales para no perderse.</p>
+            <div class="blog-card-meta">Mayo 2026 • 8 min</div>
+            <a href="como-viajar-oran-bermejo.html">Leer guía →</a>
+          </div>
+        </div>
+        <div class="blog-card">
+          <div class="blog-card-header"><img src="../assets/Imagenes-blog/la-chalana-de-aguas-blancas.png" alt="La chalana" loading="lazy" /></div>
+          <div class="blog-card-content">
+            <h3>La chalana de Aguas Blancas</h3>
+            <p>Cómo funciona la balsa, qué se cobra, qué hacer si el río está crecido y cuáles son los horarios reales.</p>
+            <div class="blog-card-meta">Mayo 2026 • 6 min</div>
+            <a href="chalana-aguas-blancas.html">Leer guía →</a>
+          </div>
+        </div>
+        <div class="blog-card">
+          <div class="blog-card-header"><img src="../assets/Imagenes-blog/mejores-dias-para-viajar.png" alt="Mejores días" loading="lazy" /></div>
+          <div class="blog-card-content">
+            <h3>Mejores días y horarios para cruzar</h3>
+            <p>Lunes vs. viernes, mañana vs. tarde. Cuándo hay menos cola en aduana y cuándo es un calvario.</p>
+            <div class="blog-card-meta">Mayo 2026 • 5 min</div>
+            <a href="mejores-dias-ir-bermejo.html">Leer guía →</a>
+          </div>
+        </div>
+        <div class="blog-card">
+          <div class="blog-card-header"><img src="../assets/Imagenes-blog/la-chalana-de-aguas-blancas.png" alt="Chalana suspendida" loading="lazy" /></div>
+          <div class="blog-card-content">
+            <h3>Si la chalana está suspendida: plan B</h3>
+            <p>Cuándo conviene esperar, cuándo desviarse por Salvador Mazza y cuánto se suma de viaje real.</p>
+            <div class="blog-card-meta">Junio 2026 • 6 min</div>
+            <a href="chalana-suspendida-alternativas.html">Leer guía →</a>
+          </div>
+        </div>
+        <div class="blog-card">
+          <div class="blog-card-header"><img src="../assets/Imagenes-blog/como-viajar-de-oran-a-bermejo.png" alt="Estacionar en Aguas Blancas" loading="lazy" /></div>
+          <div class="blog-card-content">
+            <h3>Dónde estacionar en Aguas Blancas</h3>
+            <p>Si vas a cruzar a pie, qué playa de estacionamiento conviene, cuánto cobran y qué evitar dejar adentro del auto.</p>
+            <div class="blog-card-meta">Junio 2026 • 5 min</div>
+            <a href="estacionar-aguas-blancas.html">Leer guía →</a>
+          </div>
+        </div>
+        <div class="blog-card">
+          <div class="blog-card-header"><img src="../assets/Imagenes-blog/como-viajar-de-oran-a-bermejo.png" alt="Moto vs auto" loading="lazy" /></div>
+          <div class="blog-card-content">
+            <h3>Moto vs. auto para cruzar a Bermejo</h3>
+            <p>Costos, tiempos y trámites de cada uno. Cuál conviene si vas a comprar liviano y cuál si vas a cargar.</p>
+            <div class="blog-card-meta">Junio 2026 • 6 min</div>
+            <a href="moto-vs-auto-bermejo.html">Leer guía →</a>
+          </div>
+        </div>
+      </div>
+
+      <h2 class="blog-category-title">Qué comprar (y qué no)</h2>
+      <div class="blog-grid">
+        <div class="blog-card">
+          <div class="blog-card-header"><img src="../assets/Imagenes-blog/que-comprar-en-bermejo.png" alt="Qué comprar en Bermejo" loading="lazy" /></div>
+          <div class="blog-card-content">
+            <h3>Qué conviene comprar en Bermejo hoy</h3>
+            <p>Ropa, electrónica, cosméticos. Lo que vale la pena cargar y lo que no compensa el riesgo aduanero.</p>
+            <div class="blog-card-meta">Mayo 2026 • 8 min</div>
+            <a href="que-comprar-en-bermejo.html">Leer guía →</a>
+          </div>
+        </div>
+        <div class="blog-card">
+          <div class="blog-card-header"><img src="../assets/Imagenes-blog/mercado-central-de-bermejo.png" alt="Mercado central" loading="lazy" /></div>
+          <div class="blog-card-content">
+            <h3>Mercado Central de Bermejo</h3>
+            <p>Qué encontrás en cada sector, cómo regatear sin pasarse y cuáles son las trampas turistas más comunes.</p>
+            <div class="blog-card-meta">Mayo 2026 • 7 min</div>
+            <a href="mercado-bermejo-guia.html">Leer guía →</a>
+          </div>
+        </div>
+        <div class="blog-card">
+          <div class="blog-card-header"><img src="../assets/Imagenes-blog/que-comprar-en-bermejo.png" alt="Electrónica garantía" loading="lazy" /></div>
+          <div class="blog-card-content">
+            <h3>Electrónica en Bermejo: garantía y riesgos</h3>
+            <p>Cómo verificar que un celular es original, qué garantía real tenés y qué pasa al pasar por aduana argentina.</p>
+            <div class="blog-card-meta">Junio 2026 • 7 min</div>
+            <a href="electronica-bermejo-garantia.html">Leer guía →</a>
+          </div>
+        </div>
+        <div class="blog-card">
+          <div class="blog-card-header"><img src="../assets/Imagenes-blog/mercado-central-de-bermejo.png" alt="Farmacias en Bermejo" loading="lazy" /></div>
+          <div class="blog-card-content">
+            <h3>Farmacias y medicamentos en Bermejo</h3>
+            <p>Qué medicamentos rinden mucho más que en Argentina y cuáles directamente no se pueden traer.</p>
+            <div class="blog-card-meta">Junio 2026 • 6 min</div>
+            <a href="farmacias-medicamentos-bermejo.html">Leer guía →</a>
+          </div>
+        </div>
+      </div>
+
+      <h2 class="blog-category-title">Cultura y vida en la frontera</h2>
+      <div class="blog-grid">
+        <div class="blog-card">
+          <div class="blog-card-header"><img src="../assets/Imagenes-blog/mercado-central-de-bermejo.png" alt="Gastronomía de Bermejo" loading="lazy" /></div>
+          <div class="blog-card-content">
+            <h3>Gastronomía de Bermejo: qué probar</h3>
+            <p>Api con buñuelo, salteñas, silpancho, sopa de maní. Dónde comerlos y por cuánto en pesos bolivianos.</p>
+            <div class="blog-card-meta">Junio 2026 • 7 min</div>
+            <a href="gastronomia-bermejo.html">Leer guía →</a>
+          </div>
+        </div>
+        <div class="blog-card">
+          <div class="blog-card-header"><img src="../assets/Imagenes-blog/la-chalana-de-aguas-blancas.png" alt="Historia de la frontera" loading="lazy" /></div>
+          <div class="blog-card-content">
+            <h3>Historia de la frontera Orán–Bermejo</h3>
+            <p>Cómo se formó la dinámica comercial que conocemos hoy, desde el zafrero a la cumbia villera del cruce nocturno.</p>
+            <div class="blog-card-meta">Junio 2026 • 8 min</div>
+            <a href="historia-frontera-oran-bermejo.html">Leer guía →</a>
+          </div>
+        </div>
+        <div class="blog-card">
+          <div class="blog-card-header"><img src="../assets/Imagenes-blog/mercado-central-de-bermejo.png" alt="Festividades en Bermejo" loading="lazy" /></div>
+          <div class="blog-card-content">
+            <h3>Festividades y ferias de Bermejo</h3>
+            <p>Carnaval, aniversario, fiestas patronales y feria del 24 de septiembre. Calendario para no irse el día equivocado.</p>
+            <div class="blog-card-meta">Junio 2026 • 6 min</div>
+            <a href="festividades-bermejo.html">Leer guía →</a>
           </div>
         </div>
       </div>

@@ -244,7 +244,7 @@ function buildRateCard({ key, label, flag, highlight }, rate) {
   const venta  = rate.venta  ? `<span class="price-value sell">$${formatARS(rate.venta)}</span>` : '';
 
   return `
-  <div class="rate-card${highlight ? ' highlight' : ''}" style="background: rgba(51, 65, 85, 0.80) !important;">
+  <div class="rate-card${highlight ? ' highlight' : ''}">
     <div class="card-header">
       <span class="card-name">${label}</span>
       <span class="card-flag">${flag}</span>
@@ -269,9 +269,9 @@ function buildRateCard({ key, label, flag, highlight }, rate) {
 function buildBOBCard(bob, arsPerBob) {
   const arsStr = arsPerBob ? formatNum(arsPerBob, 2) : '—';
   return `
-  <div class="rate-card highlight" style="background: rgba(51, 65, 85, 0.80) !important; opacity: 1 !important;">
+  <div class="rate-card highlight">
     <div class="card-header">
-      <span class="card-name" style="color:var(--gold); font-weight:700">Boliviano (BOB)</span>
+      <span class="card-name" style="color:var(--accent); font-weight:700">Boliviano (BOB)</span>
       <span class="card-flag">🇧🇴</span>
     </div>
     <div class="card-prices">
@@ -284,7 +284,7 @@ function buildBOBCard(bob, arsPerBob) {
         <span class="price-value single" style="font-size:24px">${arsStr} <small style="font-size:14px">Bs</small></span>
       </div>
     </div>
-    <div class="card-footer" style="border-top: 1px solid var(--border-gold); margin-top:15px; padding-top:10px">
+    <div class="card-footer" style="margin-top:14px; padding-top:10px">
       <span class="card-time" style="font-size:11px; color:var(--text-muted)">Referencia para cambio en frontera</span>
     </div>
   </div>

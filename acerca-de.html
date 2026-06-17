@@ -1,184 +1,135 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-2KX9VPYS96"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-2KX9VPYS96');
-</script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Acerca de ORAN DOLAR – Quiénes somos</title>
-  <meta name="description" content="Conocé quiénes somos en ORAN DOLAR: una plataforma de información práctica para viajeros que cruzan la frontera entre Orán, Salta y Bermejo, Bolivia." />
-  <meta name="theme-color" content="#0a0e1a" />
-  <meta name="google-adsense-account" content="ca-pub-2924479933552579">
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#ffffff" />
 
-  <!-- Open Graph -->
+  <title>Acerca de ORAN DOLAR – Quién está detrás del sitio</title>
+  <meta name="description" content="Quién está detrás de ORAN DOLAR, cómo trabajamos la información, fuentes utilizadas y por qué nació este sitio en la frontera Orán–Bermejo." />
+  <meta name="author" content="Augusto Castro" />
+  <meta name="google-adsense-account" content="ca-pub-2924479933552579" />
+
   <meta property="og:title" content="Acerca de ORAN DOLAR" />
-  <meta property="og:description" content="Tu guía para viajeros de la frontera Argentina-Bolivia. Clima, aduanas, cotizaciones de referencia y consejos prácticos." />
+  <meta property="og:description" content="Quiénes somos y cómo trabajamos la información sobre la frontera Orán–Bermejo." />
   <meta property="og:type" content="website" />
 
   <link rel="canonical" href="https://orandolar.com.ar/acerca-de.html" />
-  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" type="image/png" href="assets/og-image.png" />
+  <link rel="stylesheet" href="css/style.css?v=3.0" />
 
-  <!-- Google AdSense -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2KX9VPYS96"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-2KX9VPYS96');
+  </script>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2924479933552579" crossorigin="anonymous"></script>
 
   <style>
-    .prose {
-      max-width: 800px;
-      margin: 40px auto;
-      padding: 40px;
-      background: var(--bg-surface);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      color: var(--text);
-      line-height: 1.8;
-      font-size: 16px;
-    }
-    .prose h1 {
-      font-size: 42px;
-      margin-bottom: 24px;
-      color: var(--gold);
-      text-shadow: 0 0 20px var(--gold-glow);
-    }
-    .prose h2 {
-      font-size: 28px;
-      margin-top: 40px;
-      margin-bottom: 16px;
-      color: var(--gold);
-    }
-    .prose p {
-      margin-bottom: 20px;
-      color: var(--text-muted);
-    }
-    .prose strong {
-      color: var(--text);
-    }
-    .prose ul {
-      margin-left: 24px;
-      margin-bottom: 24px;
-      list-style-type: none;
-    }
-    .prose li {
-      margin-bottom: 12px;
-      position: relative;
-      padding-left: 20px;
-    }
-    .prose li::before {
-      content: "→";
-      position: absolute;
-      left: 0;
-      color: var(--gold);
-    }
-    .back-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      color: var(--gold);
-      text-decoration: none;
-      margin-bottom: 32px;
-      font-size: 14px;
-      font-weight: 600;
-      transition: all 0.2s;
-    }
-    .back-link:hover {
-      color: var(--gold-lt);
-      transform: translateX(-4px);
-    }
+    .prose { max-width: 760px; margin: 40px auto; padding: 0 24px; color: var(--text); line-height: 1.75; font-size: 16px; }
+    .prose h1 { font-size: 36px; margin-bottom: 8px; color: var(--text); letter-spacing: -0.02em; }
+    .prose .lede { font-size: 18px; color: var(--text-muted); margin-bottom: 32px; }
+    .prose h2 { font-size: 20px; margin-top: 36px; margin-bottom: 12px; color: var(--text); padding-bottom: 6px; border-bottom: 1px solid var(--border); }
+    .prose p, .prose li { color: var(--text-muted); }
+    .prose p { margin-bottom: 14px; }
+    .prose ul { margin: 12px 0 16px 22px; }
+    .prose li { margin-bottom: 8px; }
+    .prose strong { color: var(--text); }
+    .prose a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+    .back-link { display: inline-block; color: var(--accent); text-decoration: none; margin-bottom: 24px; font-size: 13px; font-weight: 600; }
+    .back-link:hover { opacity: 0.7; }
+    .author-card { display: flex; gap: 16px; align-items: center; padding: 20px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius); margin: 24px 0 32px; }
+    .author-card .avatar { width: 56px; height: 56px; border-radius: 50%; background: var(--accent); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 20px; flex-shrink: 0; }
+    .author-card .meta strong { display: block; color: var(--text); font-size: 15px; }
+    .author-card .meta span { font-size: 13px; color: var(--text-muted); }
   </style>
 </head>
 <body>
-
-  <!-- ══ NAVBAR SIMPLIFICADO ══ -->
-  <nav id="navbar" class="animate-in">
+  <nav id="navbar">
     <div class="nav-brand">
       <a href="index.html" style="text-decoration: none;">
         <span class="nav-logo">ORAN <span>DOLAR</span></span>
       </a>
     </div>
-    <ul class="nav-links" id="nav-links" style="display: flex; gap: 20px; align-items: center;">
+    <ul class="nav-links">
       <li><a href="index.html#cotizaciones">Cotizaciones</a></li>
-      <li><a href="blog/">Blog</a></li>
+      <li><a href="blog/">Guías</a></li>
       <li><a href="contacto.html">Contacto</a></li>
     </ul>
   </nav>
 
-  <main class="animate-in" style="animation-delay: 0.1s">
+  <main class="animate-in" style="animation-delay: 0.05s">
     <div class="prose">
       <a href="index.html" class="back-link">← Volver al inicio</a>
 
-      <h1>Sobre ORAN DOLAR</h1>
-
-      <h2>Información útil para viajeros de frontera</h2>
-      <p>
-        ORAN DOLAR es una plataforma creada para ayudar a las personas que visitan la frontera a planificar mejor su viaje y tomar decisiones informadas durante su estadía.
-      </p>
-      <p>
-        Ofrecemos información actualizada sobre cotizaciones de referencia, conversión de monedas, estado del tiempo, requisitos aduaneros, horarios y datos prácticos para quienes realizan compras, turismo o actividades comerciales en la zona fronteriza.
-      </p>
-      <p>
-        Nuestro objetivo es reunir en un solo lugar la información más importante que los viajeros suelen necesitar antes de emprender su viaje, permitiéndoles ahorrar tiempo y acceder a datos confiables de manera simple y rápida.
+      <h1>Acerca de ORAN DOLAR</h1>
+      <p class="lede">
+        Un sitio independiente, escrito desde Orán, pensado para que cruzar a Bermejo deje de ser una incógnita.
       </p>
 
-      <h2>Nuestro Compromiso</h2>
+      <div class="author-card">
+        <div class="avatar">AC</div>
+        <div class="meta">
+          <strong>Augusto Castro</strong>
+          <span>Editor y autor — Orán, Salta, Argentina</span>
+        </div>
+      </div>
+
+      <h2>Por qué existe este sitio</h2>
       <p>
-        En ORAN DOLAR trabajamos para brindar:
+        Vivo en Orán y cruzo seguido a Bermejo. Cada vez que viajaba con familia o amigos terminaba recibiendo las mismas preguntas:
+        ¿la chalana está funcionando?, ¿qué necesito llevar?, ¿hoy conviene cambiar acá o allá?, ¿qué pasa si llueve fuerte?
+        La información estaba dispersa: grupos de WhatsApp, posteos viejos de Facebook, comentarios en YouTube. Nada centralizado y, sobre todo, nada actualizado.
       </p>
+      <p>
+        ORAN DOLAR es el intento de juntar todo en un solo lugar: cotizaciones de referencia, clima de ambos lados, requisitos de aduana,
+        horarios reales de la chalana y guías escritas por gente que efectivamente cruza la frontera, no por algoritmos.
+      </p>
+
+      <h2>Cómo trabajamos la información</h2>
+      <p>
+        Los datos de cotizaciones se actualizan cada cinco minutos desde APIs públicas reconocidas
+        (<strong>DolarAPI</strong>, <strong>ExchangeRate-API</strong>). El clima viene de <strong>Open-Meteo</strong>, una de las pocas fuentes meteorológicas abiertas
+        que tiene cobertura precisa de Aguas Blancas y Bermejo.
+      </p>
+      <p>Para las guías editoriales seguimos estos principios:</p>
       <ul>
-        <li>Información actualizada de forma periódica mediante fuentes verificadas.</li>
-        <li>Datos claros y fáciles de consultar para viajeros y visitantes.</li>
-        <li>Contenido útil enfocado en las necesidades reales de quienes visitan la frontera.</li>
-        <li>Transparencia sobre el origen de la información publicada.</li>
-        <li>Independencia editorial, sin vínculos con entidades financieras ni organismos gubernamentales.</li>
+        <li>Verificamos en terreno: horarios, precios y trámites se chequean antes de publicar.</li>
+        <li>Datamos cada artículo con la fecha de publicación y revisión.</li>
+        <li>Si una norma aduanera cambia (Resolución AFIP, comunicado SENASA), actualizamos la guía afectada y dejamos constancia.</li>
+        <li>No publicamos contenido patrocinado disfrazado de editorial. Si alguna vez una casa de cambio aparece destacada, es por consulta de tarifas, no por pago.</li>
       </ul>
 
-      <h2>Qué Encontrarás en ORAN DOLAR</h2>
-      <ul>
-        <li>Cotizaciones de referencia de distintas monedas.</li>
-        <li>Conversor de monedas integrado.</li>
-        <li>Información meteorológica actualizada.</li>
-        <li>Guías prácticas para viajeros.</li>
-        <li>Requisitos aduaneros y documentación necesaria.</li>
-        <li>Consejos para compras y desplazamientos.</li>
-        <li>Artículos y novedades relacionadas con la actividad fronteriza.</li>
-      </ul>
-
-      <h2>Nuestro Equipo</h2>
+      <h2>Qué no somos</h2>
       <p>
-        ORAN DOLAR es desarrollado por un equipo de profesionales y colaboradores de la región que conocen de primera mano la dinámica de la frontera y las necesidades de quienes la visitan.
+        <strong>ORAN DOLAR no es una casa de cambio</strong>, no realiza operaciones financieras y no recibe ni envía dinero.
+        Tampoco es una agencia oficial: no estamos vinculados con AFIP, Gendarmería, Aduana Nacional de Bolivia ni con el gobierno municipal de Bermejo u Orán.
       </p>
       <p>
-        Trabajamos continuamente para mejorar la calidad de la información publicada y ofrecer herramientas que faciliten la experiencia de viaje de nuestros usuarios.
+        La información que publicamos es <strong>orientativa</strong>. Antes de tomar decisiones importantes (declarar mercadería, montos altos de efectivo, etc.)
+        siempre conviene confirmar con la autoridad correspondiente.
       </p>
 
-      <h2>Cómo Verificamos la Información</h2>
+      <h2>Cómo se sostiene el sitio</h2>
       <p>
-        Los datos publicados en ORAN DOLAR provienen de fuentes verificadas y son revisados periódicamente para garantizar su precisión y consistencia.
-      </p>
-      <p>
-        Cuando existen diferencias significativas entre distintas fuentes, realizamos verificaciones adicionales antes de actualizar la información mostrada en el sitio.
-      </p>
-      <p>
-        Nuestro compromiso es ofrecer contenido útil, claro y confiable para que cada viajero pueda planificar su recorrido con mayor tranquilidad y confianza.
+        ORAN DOLAR es gratuito y se financia con publicidad mostrada a través de <strong>Google AdSense</strong>.
+        Los anuncios son seleccionados por Google según el perfil del visitante; ORAN DOLAR no elige individualmente qué se anuncia.
+        Si alguna vez ves un anuncio engañoso o inapropiado, escribime y lo reporto.
       </p>
 
-      <hr style="border: none; border-top: 1px solid var(--border); margin: 40px 0;">
-
-      <p style="font-size: 14px; color: var(--text-muted); text-align: center;">
-        ORAN DOLAR – Tu guía para viajar a la frontera con Bolivia.
+      <h2>Contacto</h2>
+      <p>
+        Para sugerencias, correcciones, propuestas de colaboración o anuncios, escribime a
+        <a href="mailto:augustocastroo38@gmail.com">augustocastroo38@gmail.com</a> o por
+        <a href="https://wa.me/5493878801149" target="_blank" rel="noopener">WhatsApp</a>.
+        Si encontrás un error en una guía, agradezco que me lo digas: la frontera cambia seguido y dos pares de ojos siempre son mejores que uno.
       </p>
     </div>
   </main>
 
-  <!-- ══ FOOTER ══ -->
   <footer id="footer">
     <div class="container">
       <div class="footer-inner">
@@ -188,7 +139,7 @@
         </div>
         <div class="footer-links">
           <a href="index.html#cotizaciones">Cotizaciones</a>
-          <a href="blog/">Blog</a>
+          <a href="blog/">Guías</a>
           <a href="acerca-de.html">Acerca de</a>
           <a href="contacto.html">Contacto</a>
           <a href="privacidad.html">Privacidad</a>
@@ -201,6 +152,5 @@
       </div>
     </div>
   </footer>
-
 </body>
 </html>
