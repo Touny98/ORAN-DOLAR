@@ -176,34 +176,12 @@ export function initAnimations() {
 }
 
 export function animateRateCards(grid) {
-  if (!grid) return;
+  if (!grid || REDUCED) return;
 
-  if (REDUCED) {
-    /* Sin animaciones: mostrar tarjetas directamente */
-    grid.querySelectorAll('.rate-card').forEach(card => {
-      card.style.opacity   = '1';
-      card.style.transform = 'none';
-    });
-    return;
-  }
-
-  /* Stagger entry animation on each card */
-  const STAGGER = IS_TOUCH ? 60 : 80;
-  const EASING  = 'cubic-bezier(0.22, 1, 0.36, 1)';
-  grid.querySelectorAll('.rate-card').forEach((card, i) => {
-    card.style.opacity    = '0';
-    card.style.transform  = 'translateY(12px)';
-    card.style.transition = `opacity 0.5s ${EASING}, transform 0.5s ${EASING}`;
-    setTimeout(() => {
-      card.style.opacity   = '1';
-      card.style.transform = 'translateY(0)';
-    }, i * STAGGER);
-  });
-
-  /* Counter animation on buy/sell values */
+  /* Solo animar los números — las cards son visibles por defecto */
   grid.querySelectorAll('.price-value.buy, .price-value.sell').forEach((el, i) => {
     const raw = el.textContent.trim();
     if (!raw || raw === '—') return;
-    setTimeout(() => animateNumber(el, raw), i * 120 + 200);
+    setTimeout(() => animateNumber(el, raw), i * 120 + 100);
   });
 }
