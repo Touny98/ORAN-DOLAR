@@ -168,6 +168,39 @@ function animateNumber(el, targetStr) {
   requestAnimationFrame(tick);
 }
 
+function animateBOBNumber(el) {
+  if (REDUCED) return;
+  const originalHTML = el.innerHTML;
+  const raw = el.textContent.trim();
+  /* "6,92 Bs" → 6.92 */
+  const target = parseFloat(raw.replace(/[^0-9,]/g, '').replace(',', '.'));
+  if (isNaN(target) || target <= 0) return;
+
+  const duration = IS_TOUCH ? 800 : 1200;
+  const start    = performance.now();
+
+  function tick(now) {
+    const progress = Math.min((now - start) / duration, 1);
+    const eased    = easeOutExpo(progress);
+    const current  = target * eased;
+
+    el.textContent = current.toLocaleString('es-AR', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }) + ' Bs';
+
+    if (progress < 1) {
+      requestAnimationFrame(tick);
+    } else {
+      el.innerHTML = originalHTML; /* restaurar <small> tag */
+      el.classList.add('value-flash');
+      el.addEventListener('animationend', () => el.classList.remove('value-flash'), { once: true });
+    }
+  }
+
+  requestAnimationFrame(tick);
+}
+
 /* ── EXPORTS ───────────────────────────────────────────────── */
 
 export function initAnimations() {
@@ -178,10 +211,15 @@ export function initAnimations() {
 export function animateRateCards(grid) {
   if (!grid || REDUCED) return;
 
-  /* Solo animar los números — las cards son visibles por defecto */
+  /* Animar valores ARS (compra/venta) */
   grid.querySelectorAll('.price-value.buy, .price-value.sell').forEach((el, i) => {
     const raw = el.textContent.trim();
     if (!raw || raw === '—') return;
     setTimeout(() => animateNumber(el, raw), i * 120 + 100);
+  });
+
+  /* Animar valores BOB */
+  grid.querySelectorAll('.price-value.single').forEach((el, i) => {
+    setTimeout(() => animateBOBNumber(el), i * 150 + 100);
   });
 }

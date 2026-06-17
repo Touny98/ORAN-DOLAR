@@ -291,7 +291,7 @@ img { max-width: 100%; height: auto; }
 }
 .price-value.buy  { color: var(--green); }
 .price-value.sell { color: var(--red); }
-.price-value.single { color: var(--accent); font-size: 26px; }
+.price-value.single { color: var(--blue); font-size: 26px; }
 
 .card-footer {
   margin-top: 14px;
