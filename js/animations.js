@@ -35,6 +35,11 @@ function initDotCanvas() {
   let dots  = [];
   let raf   = null;
 
+  function getDotColor() {
+    return getComputedStyle(document.documentElement)
+      .getPropertyValue('--dot-color').trim() || '#111111';
+  }
+
   function buildGrid() {
     const rect = section.getBoundingClientRect();
     canvas.width  = rect.width;
@@ -49,7 +54,7 @@ function initDotCanvas() {
 
   function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = '#111111';
+    ctx.fillStyle = getDotColor();
     for (const { cx, cy } of dots) {
       const dist = Math.hypot(cx - mouse.x, cy - mouse.y);
       const t    = Math.max(0, 1 - dist / INFLUENCE);
@@ -87,8 +92,8 @@ function initDotCanvas() {
 
 /* ── 2. SCROLL REVEALS ─────────────────────────────────────── */
 
-const REVEAL_EASING  = 'cubic-bezier(0.16, 1, 0.3, 1)';
-const REVEAL_STAGGER = IS_TOUCH ? 45 : 55;
+const REVEAL_EASING  = 'cubic-bezier(0.22, 1, 0.36, 1)';
+const REVEAL_STAGGER = IS_TOUCH ? 55 : 70;
 const REVEAL_MAX     = 8;
 const CHILD_SEL      = '.section-header, .rate-card, .news-card, .home-post-card, .casa-card, .accordion-item, .faq-item';
 
@@ -112,8 +117,8 @@ function initScrollReveals() {
 
     getRevealChildren(section).forEach(child => {
       const isHeader = child.classList.contains('section-header');
-      const dur      = isHeader ? 350 : 500;
-      const dy       = isHeader ? 8 : (IS_TOUCH ? 10 : 12);
+      const dur      = isHeader ? 450 : 600;
+      const dy       = isHeader ? 14 : (IS_TOUCH ? 20 : 24);
       child.style.opacity   = '0';
       child.style.transform = `translateY(${dy}px)`;
       child.style.transition = `opacity ${dur}ms ${REVEAL_EASING}, transform ${dur}ms ${REVEAL_EASING}`;

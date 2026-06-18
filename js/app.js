@@ -42,6 +42,7 @@ function getValidThumbnail(url) {
 /* ── Bootstrap ── */
 document.addEventListener('DOMContentLoaded', async () => {
   initCookieBanner();
+  initThemeToggle();
   initAnimations();
   initNavbar();
   initAccordion();
@@ -52,6 +53,29 @@ document.addEventListener('DOMContentLoaded', async () => {
   await fetchAll();
   startAutoRefresh();
 });
+
+/* ── Theme toggle (claro/oscuro) ── */
+function initThemeToggle() {
+  const btn = document.getElementById('theme-toggle');
+  if (!btn) return;
+
+  const mql = window.matchMedia('(prefers-color-scheme: dark)');
+
+  btn.addEventListener('click', () => {
+    const current = document.documentElement.getAttribute('data-theme') || 'light';
+    const next    = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    try { localStorage.setItem('theme', next); } catch (e) {}
+  });
+
+  /* Si el usuario nunca eligió manualmente, seguir el sistema */
+  mql.addEventListener?.('change', e => {
+    try {
+      if (localStorage.getItem('theme')) return;
+    } catch (e) {}
+    document.documentElement.setAttribute('data-theme', e.matches ? 'dark' : 'light');
+  });
+}
 
 function initCookieBanner() {
   const banner = document.getElementById('cookie-banner');
@@ -165,6 +189,56 @@ function initConverter() {
   fromSel.addEventListener('change', recalc);
   toSel.addEventListener('change', recalc);
   window._recalcConverter = recalc;
+
+  /* Swap button: intercambia from/to con rotación + cross-fade */
+  const swapBtn = document.getElementById('converter-swap');
+  if (swapBtn) {
+    let swapState = false;
+    const groupFrom = fromSel.closest('.converter-input-group');
+    const groupTo   = toSel.closest('.converter-input-group');
+
+    swapBtn.addEventListener('click', () => {
+      swapState = !swapState;
+      swapBtn.classList.toggle('rotating', swapState);
+
+      groupFrom?.classList.add('crossfade-out');
+      groupTo?.classList.add('crossfade-out');
+
+      setTimeout(() => {
+        const tmp = fromSel.value;
+        fromSel.value = toSel.value;
+        toSel.value   = tmp;
+
+        groupFrom?.classList.remove('crossfade-out');
+        groupTo?.classList.remove('crossfade-out');
+
+        recalc();
+      }, 150);
+    });
+  }
+}
+
+/* ── Border status (chalana) ── */
+function renderBorderStatus(weather) {
+  const el = document.getElementById('border-status');
+  if (!el) return;
+
+  const atRisk = shouldShowRainAlert(weather);
+  const dot    = el.querySelector('.pulse-dot');
+  const label  = el.querySelector('strong');
+  const detail = el.querySelector('.border-status-detail');
+
+  if (atRisk) {
+    dot.classList.remove('pulse-green');
+    dot.classList.add('pulse-red');
+    if (label)  label.textContent  = 'Posible suspensión';
+    if (detail) detail.textContent = 'Lluvia intensa en la zona — confirmá antes de salir';
+  } else {
+    dot.classList.remove('pulse-red');
+    dot.classList.add('pulse-green');
+    if (label)  label.textContent  = 'Cruce operativo';
+    if (detail) detail.textContent = 'Sin alertas climáticas — consultá horario antes de viajar';
+  }
 }
 
 /* ── Fetch all ── */
@@ -185,9 +259,11 @@ async function fetchAll(manual = false) {
     lastFetchTime = new Date();
 
     setRates(rates, bob);
+    pushRatesHistory(rates, bob);
     renderRateCards(rates, bob);
     renderWeather(weather);
     handleRainAlert(weather);
+    renderBorderStatus(weather);
     updateTimestamp();
 
     if (window._recalcConverter) window._recalcConverter();
@@ -216,12 +292,108 @@ function updateTimestamp() {
     : 'Actualizando…';
 }
 
+/* ── Icons SVG minimalistas (monograma circular) ── */
+function currencyIcon(code) {
+  const ICONS = {
+    USD: 'USD',
+    BOB: 'BO',
+    ARS: 'AR',
+  };
+  const text = ICONS[code] || code;
+  const fs   = text.length > 2 ? 8 : 10;
+  return `
+    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <circle cx="14" cy="14" r="12.5" stroke="currentColor" stroke-width="1.5" fill="none" opacity="0.45"/>
+      <text x="14" y="14" font-family="Inter, system-ui, sans-serif" font-size="${fs}" font-weight="700" fill="currentColor" text-anchor="middle" dominant-baseline="central" letter-spacing="0.5">${text}</text>
+    </svg>`;
+}
+
 /* ── Render rate cards ── */
 const CARD_CONFIG = [
-  { key: 'blue',    label: 'Dólar Blue',    flag: '💵', highlight: true },
-  { key: 'oficial', label: 'Dólar Oficial', flag: '🏛️' },
-  { key: 'cripto',  label: 'Dólar Cripto',  flag: '🔶' },
+  { key: 'blue',    label: 'Dólar Blue',    code: 'USD', highlight: true },
+  { key: 'oficial', label: 'Dólar Oficial', code: 'USD' },
+  { key: 'cripto',  label: 'Dólar Cripto',  code: 'USD' },
 ];
+
+/* ── Buffer histórico (sparkline 7 días) ── */
+const HISTORY_KEY = 'rates-history-v1';
+const HISTORY_DAYS = 7;
+
+function loadRatesHistory() {
+  try { return JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]'); }
+  catch (e) { return []; }
+}
+
+function pushRatesHistory(rates, bob) {
+  try {
+    const now = Date.now();
+    const snap = {
+      t: now,
+      blue:    rates.blue?.venta    ?? null,
+      oficial: rates.oficial?.venta ?? null,
+      cripto:  rates.cripto?.venta  ?? null,
+      bob:     bob                  ?? null,
+    };
+    const history = loadRatesHistory();
+    const last = history[history.length - 1];
+    /* No agregar más de 1 punto por hora para no saturar */
+    if (last && (now - last.t) < 60 * 60 * 1000) return;
+
+    history.push(snap);
+    const cutoff = now - HISTORY_DAYS * 24 * 60 * 60 * 1000;
+    const trimmed = history.filter(h => h.t >= cutoff);
+    localStorage.setItem(HISTORY_KEY, JSON.stringify(trimmed));
+  } catch (e) {}
+}
+
+function buildSparkline(values) {
+  if (!values || values.length < 3) {
+    const need = 3 - (values?.length || 0);
+    return `<div class="sparkline-empty">Recopilando datos — el gráfico estará disponible en ${need} actualización${need === 1 ? '' : 'es'} más</div>`;
+  }
+  const W = 280, H = 60, P = 4;
+  const min = Math.min(...values);
+  const max = Math.max(...values);
+  const range = max - min || 1;
+  const xStep = (W - P * 2) / (values.length - 1);
+
+  const points = values.map((v, i) => {
+    const x = P + i * xStep;
+    const y = P + (H - P * 2) * (1 - (v - min) / range);
+    return [x, y];
+  });
+
+  const linePath = points.map(([x, y], i) => `${i === 0 ? 'M' : 'L'} ${x.toFixed(1)} ${y.toFixed(1)}`).join(' ');
+  const areaPath = `${linePath} L ${points[points.length - 1][0].toFixed(1)} ${H - P} L ${points[0][0].toFixed(1)} ${H - P} Z`;
+  const last = points[points.length - 1];
+
+  const gradId = 'sg-' + Math.random().toString(36).slice(2, 8);
+  return `
+    <svg class="sparkline-svg" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true">
+      <defs>
+        <linearGradient id="${gradId}" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="currentColor" stop-opacity="0.18"/>
+          <stop offset="100%" stop-color="currentColor" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <path d="${areaPath}" fill="url(#${gradId})" stroke="none"/>
+      <path d="${linePath}" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="${last[0].toFixed(1)}" cy="${last[1].toFixed(1)}" r="2.5" fill="currentColor"/>
+    </svg>`;
+}
+
+function attachSparklineToggles() {
+  document.querySelectorAll('.sparkline-toggle').forEach(btn => {
+    if (btn.dataset.bound) return;
+    btn.dataset.bound = '1';
+    btn.addEventListener('click', () => {
+      const target = btn.nextElementSibling;
+      if (!target) return;
+      const isOpen = target.classList.toggle('open');
+      btn.classList.toggle('open', isOpen);
+    });
+  });
+}
 
 function renderRateCards(rates, bob) {
   const grid = document.getElementById('rates-grid');
@@ -239,10 +411,22 @@ function renderRateCards(rates, bob) {
     grid.insertAdjacentHTML('beforeend', buildRateCard(cfg, rate));
   }
 
+  attachSparklineToggles();
   animateRateCards(grid);
 }
 
-function buildRateCard({ key, label, flag, highlight }, rate) {
+function buildSparklineBlock(historyKey) {
+  const history = loadRatesHistory();
+  const values  = history.map(h => h[historyKey]).filter(v => typeof v === 'number');
+  return `
+    <button class="sparkline-toggle" type="button" aria-expanded="false">
+      Ver tendencia 7d <span class="chev">▾</span>
+    </button>
+    <div class="sparkline-container">${buildSparkline(values)}</div>
+  `;
+}
+
+function buildRateCard({ key, label, code, highlight }, rate) {
   const compra = rate.compra ? `<span class="price-value buy">$${formatARS(rate.compra)}</span>` : '';
   const venta  = rate.venta  ? `<span class="price-value sell">$${formatARS(rate.venta)}</span>` : '';
 
@@ -250,22 +434,23 @@ function buildRateCard({ key, label, flag, highlight }, rate) {
   <div class="rate-card${highlight ? ' highlight' : ''}">
     <div class="card-header">
       <span class="card-name">${label}</span>
-      <span class="card-flag">${flag}</span>
+      <span class="card-flag">${currencyIcon(code)}</span>
     </div>
     <div class="card-prices">
       <div class="price-block">
-        <div class="price-label">Compra</div>
         ${compra || '<span class="price-value buy" style="font-size:14px;color:var(--text-dim)">—</span>'}
+        <div class="price-label">Compra</div>
       </div>
       <div class="price-block">
-        <div class="price-label">Venta</div>
         ${venta || '<span class="price-value sell" style="font-size:14px;color:var(--text-dim)">—</span>'}
+        <div class="price-label">Venta</div>
       </div>
     </div>
     <div class="card-footer">
       <span class="card-time">${timeAgo(rate.fechaActualizacion)}</span>
       <span class="card-change neutral">ARS</span>
     </div>
+    ${buildSparklineBlock(key)}
   </div>`;
 }
 
@@ -275,21 +460,22 @@ function buildBOBCard(bob, arsPerBob) {
   <div class="rate-card highlight">
     <div class="card-header">
       <span class="card-name" style="color:var(--accent); font-weight:700">Boliviano (BOB)</span>
-      <span class="card-flag">🇧🇴</span>
+      <span class="card-flag">${currencyIcon('BOB')}</span>
     </div>
     <div class="card-prices">
       <div class="price-block">
-        <div class="price-label" style="font-size:12px; color:var(--text-muted)">1 DÓLAR VALE:</div>
         <span class="price-value single">${formatNum(bob, 2)} <small style="font-size:14px">Bs</small></span>
+        <div class="price-label">1 dólar vale</div>
       </div>
       <div class="price-block">
-        <div class="price-label" style="font-size:12px; color:var(--text-muted)">POR 1.000 PESOS:</div>
         <span class="price-value single" style="font-size:24px">${arsStr} <small style="font-size:14px">Bs</small></span>
+        <div class="price-label">Por 1.000 pesos</div>
       </div>
     </div>
     <div class="card-footer" style="margin-top:14px; padding-top:10px">
       <span class="card-time" style="font-size:11px; color:var(--text-muted)">Referencia para cambio en frontera</span>
     </div>
+    ${buildSparklineBlock('bob')}
   </div>
   `;
 }

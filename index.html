@@ -24,8 +24,18 @@
 
   <link rel="canonical" href="https://orandolar.com.ar/" />
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-  <script>document.documentElement.classList.add('js-reveal-pending')</script>
-  <link rel="stylesheet" href="css/style.css?v=5.0" />
+  <script>
+    document.documentElement.classList.add('js-reveal-pending');
+    (function() {
+      try {
+        var saved = localStorage.getItem('theme');
+        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var theme = saved || (prefersDark ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch (e) {}
+    })();
+  </script>
+  <link rel="stylesheet" href="css/style.css?v=6.0" />
 
   <!-- Google Analytics 4 -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-2KX9VPYS96"></script>
@@ -70,6 +80,15 @@
         <span class="update-dot"></span>
         <span id="update-time">Cargando…</span>
       </span>
+      <button id="theme-toggle" title="Cambiar tema claro/oscuro" aria-label="Cambiar tema">
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+        <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="4"/>
+          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+        </svg>
+      </button>
       <button id="refresh-btn" title="Actualizar información">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <polyline points="23 4 23 10 17 10"/>
@@ -89,21 +108,19 @@
   <main>
 
     <!-- ── HERO INTRO: IDENTIDAD DEL SITIO ── -->
-    <section id="hero-intro" class="section animate-in hero-canvas-wrapper" style="padding-bottom: 0; padding-top: 48px;">
+    <section id="hero-intro" class="section hero-canvas-wrapper" style="padding-bottom: 0; padding-top: 64px;">
       <div class="container">
-        <div style="text-align: center; max-width: 760px; margin: 0 auto 48px;">
-          <h1 style="font-size: 42px; color: var(--text); margin-bottom: 18px; line-height: 1.15; letter-spacing: -0.03em;">
-            Tu guía para cruzar la frontera Orán–Bermejo
-          </h1>
-          <p style="font-size: 17px; color: var(--text-muted); line-height: 1.7; margin-bottom: 28px;">
-            <strong style="color: var(--text);">ORAN DOLAR</strong> reúne la información que necesitás antes de viajar entre
-            <strong style="color: var(--text);">Orán, Salta</strong> y <strong style="color: var(--text);">Bermejo, Bolivia</strong>:
+        <div class="hero-intro-content">
+          <h1 class="hero-title">Tu guía para cruzar la frontera Orán–Bermejo</h1>
+          <p class="hero-subtitle">
+            <strong>ORAN DOLAR</strong> reúne la información que necesitás antes de viajar entre
+            <strong>Orán, Salta</strong> y <strong>Bermejo, Bolivia</strong>:
             clima, horarios de chalana, requisitos aduaneros, cotizaciones de referencia y guías escritas por gente que cruza la frontera.
           </p>
-          <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
-            <a href="#viaje" style="padding: 11px 22px; background: var(--accent); color: #fff; border-radius: var(--radius-sm); font-weight: 600; font-size: 14px; text-decoration: none;">Info de viaje</a>
-            <a href="blog/" style="padding: 11px 22px; background: transparent; border: 1px solid var(--accent); color: var(--accent); border-radius: var(--radius-sm); font-weight: 600; font-size: 14px; text-decoration: none;">Leer guías</a>
-            <a href="#cotizaciones" style="padding: 11px 22px; background: transparent; border: 1px solid var(--border); color: var(--text-muted); border-radius: var(--radius-sm); font-weight: 600; font-size: 14px; text-decoration: none;">Cotizaciones</a>
+          <div class="hero-cta-row">
+            <a href="#viaje" class="hero-cta hero-cta-primary">Info de viaje</a>
+            <a href="blog/" class="hero-cta hero-cta-outline">Leer guías</a>
+            <a href="#cotizaciones" class="hero-cta hero-cta-ghost">Cotizaciones</a>
           </div>
         </div>
       </div>
@@ -216,7 +233,14 @@
                     <option value="ETH">ETH - Ethereum</option>
                   </select>
                 </div>
-                <div class="converter-arrow">→</div>
+                <button id="converter-swap" class="converter-swap" type="button" title="Invertir monedas" aria-label="Invertir monedas">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="17 1 21 5 17 9"/>
+                    <path d="M3 11V9a4 4 0 0 1 4-4h14"/>
+                    <polyline points="7 23 3 19 7 15"/>
+                    <path d="M21 13v2a4 4 0 0 1-4 4H3"/>
+                  </svg>
+                </button>
                 <div class="converter-input-group">
                   <label for="conv-to">Hacia</label>
                   <select id="conv-to">
@@ -285,16 +309,48 @@
               <svg class="accordion-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
             </button>
             <div class="accordion-body">
-              <table class="info-table">
-                <thead><tr><th>Tramo</th><th>Tiempo estimado</th><th>Observación</th></tr></thead>
-                <tbody>
-                  <tr><td>Orán centro → Aguas Blancas</td><td>15–20 min</td><td>Ruta 50, pavimentada</td></tr>
-                  <tr><td>Espera en Gendarmería (Argentina)</td><td>5–20 min</td><td>Variable según el día</td></tr>
-                  <tr><td>Chalana Aguas Blancas → Bermejo</td><td>5–10 min</td><td>Suspendida con río crecido</td></tr>
-                  <tr><td>Aduana boliviana + entrada</td><td>15–30 min</td><td>Fines de semana: más demora</td></tr>
-                  <tr><td><strong>Total estimado</strong></td><td><strong>40–80 min</strong></td><td>Ida solamente</td></tr>
-                </tbody>
-              </table>
+              <ol class="timeline">
+                <li class="timeline-step">
+                  <span class="timeline-dot"></span>
+                  <div class="timeline-content">
+                    <h4>Orán centro → Aguas Blancas</h4>
+                    <span class="timeline-time">15–20 min</span>
+                    <p>Ruta 50, pavimentada</p>
+                  </div>
+                </li>
+                <li class="timeline-step">
+                  <span class="timeline-dot"></span>
+                  <div class="timeline-content">
+                    <h4>Espera en Gendarmería (Argentina)</h4>
+                    <span class="timeline-time">5–20 min</span>
+                    <p>Variable según el día</p>
+                  </div>
+                </li>
+                <li class="timeline-step">
+                  <span class="timeline-dot"></span>
+                  <div class="timeline-content">
+                    <h4>Chalana Aguas Blancas → Bermejo</h4>
+                    <span class="timeline-time">5–10 min</span>
+                    <p>Suspendida con río crecido</p>
+                  </div>
+                </li>
+                <li class="timeline-step">
+                  <span class="timeline-dot"></span>
+                  <div class="timeline-content">
+                    <h4>Aduana boliviana + entrada</h4>
+                    <span class="timeline-time">15–30 min</span>
+                    <p>Fines de semana: más demora</p>
+                  </div>
+                </li>
+                <li class="timeline-step total">
+                  <span class="timeline-dot"></span>
+                  <div class="timeline-content">
+                    <h4>Total estimado</h4>
+                    <span class="timeline-time">40–80 min</span>
+                    <p>Ida solamente</p>
+                  </div>
+                </li>
+              </ol>
             </div>
           </div>
 
@@ -305,6 +361,11 @@
               <svg class="accordion-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
             </button>
             <div class="accordion-body">
+              <div class="border-status" id="border-status">
+                <span class="pulse-dot pulse-green"></span>
+                <strong>Cruce operativo</strong>
+                <span class="border-status-detail">Estado en base al clima</span>
+              </div>
               <ul class="info-list">
                 <li>El cruce se hace en balsa (chalana) sobre el Río Bermejo en Aguas Blancas.</li>
                 <li>Horario habitual: 6:00 a 20:00hs (confirmar antes de ir).</li>
@@ -565,7 +626,7 @@
     </div>
   </div>
 
-  <script type="module" src="js/app.js?v=5.0"></script>
+  <script type="module" src="js/app.js?v=6.0"></script>
 
   <!-- ══ DATOS ESTRUCTURADOS JSON-LD ══ -->
   <script type="application/ld+json">
