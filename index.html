@@ -7,20 +7,20 @@
   <meta name="theme-color" content="#ffffff" />
 
   <title>ORAN DOLAR – Guía para viajeros de la frontera Orán–Bermejo | Salta, Argentina</title>
-  <meta name="description" content="Planificá tu viaje a Bermejo, Bolivia desde Orán, Salta. Clima, aduanas, requisitos, horarios de chalana y consejos prácticos para cruzar la frontera con tranquilidad." />
+  <meta name="description" content="Cotizaciones del dólar en tiempo real, clima actualizado, estado de la chalana y guías prácticas para cruzar la frontera entre Orán, Salta y Bermejo, Bolivia." />
   <meta name="author" content="Augusto Castro" />
   <meta name="google-adsense-account" content="ca-pub-2924479933552579" />
   <meta name="google-site-verification" content="2dsOCoW6deWKHRT3jXFLdMDd6hhT4ToyPYYZWVoqDtE" />
 
   <!-- SEO & Social -->
   <meta property="og:title" content="ORAN DOLAR – Guía práctica para viajeros de la frontera Orán–Bermejo" />
-  <meta property="og:description" content="Clima, aduanas, horarios de chalana, requisitos y consejos para cruzar la frontera entre Orán, Salta y Bermejo, Bolivia." />
+  <meta property="og:description" content="Cotizaciones en tiempo real, clima, estado de la chalana y guías para cruzar la frontera Orán–Bermejo con tranquilidad." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://orandolar.com.ar/" />
   <meta property="og:image" content="https://orandolar.com.ar/assets/og-image.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="ORAN DOLAR – Guía para viajeros de la frontera Orán–Bermejo" />
-  <meta name="twitter:description" content="Clima, aduanas, horarios y consejos prácticos para cruzar de Orán a Bermejo con tranquilidad." />
+  <meta name="twitter:description" content="Cotizaciones en tiempo real, clima, chalana y guías prácticas para cruzar la frontera Orán–Bermejo." />
 
   <link rel="canonical" href="https://orandolar.com.ar/" />
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
@@ -35,7 +35,11 @@
       } catch (e) {}
     })();
   </script>
-  <link rel="stylesheet" href="css/style.css?v=6.0" />
+  <!-- Google Fonts: link en HTML para cargar en paralelo (mejor que @import en CSS) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=DM+Sans:wght@400;500;600&family=Spectral:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=7.0" />
 
   <!-- Google Analytics 4 -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-2KX9VPYS96"></script>
@@ -50,6 +54,7 @@
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2924479933552579" crossorigin="anonymous"></script>
 </head>
 <body>
+  <a href="#cotizaciones" class="skip-link">Ir al contenido principal</a>
 
   <!-- ══ ALERTA DE LLUVIA ══ -->
   <div id="alert-banner" role="alert">
@@ -59,7 +64,7 @@
   </div>
 
   <!-- ══ NAVBAR ══ -->
-  <nav id="navbar">
+  <nav id="navbar" aria-label="Navegación principal">
     <div class="nav-brand">
       <span class="nav-logo">ORAN <span>DOLAR</span></span>
       <span class="nav-badge">EN VIVO</span>
@@ -89,7 +94,7 @@
           <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
         </svg>
       </button>
-      <button id="refresh-btn" title="Actualizar información">
+      <button id="refresh-btn" title="Actualizar información" aria-label="Actualizar cotizaciones">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <polyline points="23 4 23 10 17 10"/>
           <polyline points="1 20 1 14 7 14"/>
@@ -111,11 +116,11 @@
     <section id="hero-intro" class="section hero-canvas-wrapper" style="padding-bottom: 0; padding-top: 64px;">
       <div class="container">
         <div class="hero-intro-content">
-          <h1 class="hero-title">Tu guía para cruzar la frontera Orán–Bermejo</h1>
+          <h1 class="hero-title">Todo lo que necesitás antes de cruzar a Bermejo</h1>
           <p class="hero-subtitle">
-            <strong>ORAN DOLAR</strong> reúne la información que necesitás antes de viajar entre
-            <strong>Orán, Salta</strong> y <strong>Bermejo, Bolivia</strong>:
-            clima, horarios de chalana, requisitos aduaneros, cotizaciones de referencia y guías escritas por gente que cruza la frontera.
+            Cotizaciones en tiempo real, clima actualizado, estado de la chalana y guías prácticas
+            para cruzar la frontera entre <strong>Orán, Salta</strong> y <strong>Bermejo, Bolivia</strong>
+            con total tranquilidad.
           </p>
           <div class="hero-cta-row">
             <a href="#viaje" class="hero-cta hero-cta-primary">Info de viaje</a>
@@ -225,13 +230,7 @@
                 </div>
                 <div class="converter-input-group">
                   <label for="conv-from">Desde</label>
-                  <select id="conv-from">
-                    <option value="ARS">ARS - Peso Argentino</option>
-                    <option value="USD">USD - Dólar Estadounidense</option>
-                    <option value="BOB">BOB - Boliviano</option>
-                    <option value="BTC">BTC - Bitcoin</option>
-                    <option value="ETH">ETH - Ethereum</option>
-                  </select>
+                  <select id="conv-from"></select>
                 </div>
                 <button id="converter-swap" class="converter-swap" type="button" title="Invertir monedas" aria-label="Invertir monedas">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -243,13 +242,7 @@
                 </button>
                 <div class="converter-input-group">
                   <label for="conv-to">Hacia</label>
-                  <select id="conv-to">
-                    <option value="BOB">BOB - Boliviano</option>
-                    <option value="ARS">ARS - Peso Argentino</option>
-                    <option value="USD">USD - Dólar Estadounidense</option>
-                    <option value="BTC">BTC - Bitcoin</option>
-                    <option value="ETH">ETH - Ethereum</option>
-                  </select>
+                  <select id="conv-to"></select>
                 </div>
                 <div class="converter-result-group">
                   <label>Resultado</label>
@@ -368,9 +361,9 @@
               </div>
               <ul class="info-list">
                 <li>El cruce se hace en balsa (chalana) sobre el Río Bermejo en Aguas Blancas.</li>
-                <li>Horario habitual: 6:00 a 20:00hs (confirmar antes de ir).</li>
+                <li>Horario habitual: 6:00 a 20:00 hs. Los domingos y feriados puede operar con horario reducido. Confirmar antes de ir.</li>
                 <li>El servicio se suspende cuando el caudal del río es peligroso (épocas de lluvias intensas).</li>
-                <li>Se cobra por persona y por vehículo. Llevar pesos argentinos o bolivianos en efectivo.</li>
+                <li>Se cobra por persona y por vehículo (consultá precio actualizado al momento del cruce). Llevar pesos argentinos o bolivianos en efectivo.</li>
                 <li>Con lluvia fuerte el día anterior, es recomendable consultar el estado del río antes de salir.</li>
                 <li>Si la chalana está suspendida, el paso más cercano habilitado puede ser Salvador Mazza.</li>
               </ul>
@@ -418,6 +411,43 @@
                 <li>Llevar bolsas grandes para cargar las compras: en la chalana el espacio es limitado.</li>
                 <li>Avisar a alguien antes de salir, especialmente si vas en moto o a pie.</li>
               </ul>
+            </div>
+          </div>
+
+
+          <!-- Cómo llegar: mapa y GPS -->
+          <div class="accordion-item">
+            <button class="accordion-header" aria-expanded="false">
+              <span class="accordion-title"><span class="accordion-icon">🗺️</span> Cómo llegar: mapa y GPS</span>
+              <svg class="accordion-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="accordion-body">
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:14px;">
+                <div style="background:var(--bg-surface); border-radius:var(--radius-sm); padding:14px; border:1px solid var(--border);">
+                  <div style="font-size:10px; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.8px; margin-bottom:6px;">📍 Desde Orán centro</div>
+                  <div style="font-size:16px; font-weight:600; color:var(--accent);">12 km · 15–20 min</div>
+                  <div style="font-size:12px; color:var(--text-muted); margin-top:3px;">Ruta Prov. 50, pavimentada todo el año</div>
+                </div>
+                <div style="background:var(--bg-surface); border-radius:var(--radius-sm); padding:14px; border:1px solid var(--border);">
+                  <div style="font-size:10px; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.8px; margin-bottom:6px;">⛵ Cruce en chalana</div>
+                  <div style="font-size:16px; font-weight:600; color:var(--accent);">5–10 min</div>
+                  <div style="font-size:12px; color:var(--text-muted); margin-top:3px;">Aguas Blancas → Bermejo, Bolivia</div>
+                </div>
+              </div>
+              <div style="position:relative; padding-bottom:52%; height:0; border-radius:var(--radius-sm); overflow:hidden; border:1px solid var(--border);">
+                <iframe
+                  src="https://www.openstreetmap.org/export/embed.html?bbox=-64.42%2C-22.80%2C-64.29%2C-22.65&amp;layer=mapnik&amp;marker=-22.728%2C-64.361"
+                  style="position:absolute; top:0; left:0; width:100%; height:100%; border:none;"
+                  loading="lazy"
+                  title="Mapa de la frontera Aguas Blancas – Bermejo"
+                  aria-label="Mapa interactivo del punto de cruce en Aguas Blancas, Salta">
+                </iframe>
+              </div>
+              <div class="info-disclaimer" style="margin-top:12px;">
+                🗺️ <strong>GPS: -22.728, -64.361</strong> (Aguas Blancas, Salta). Navegá con
+                <a href="https://maps.google.com/?q=-22.728,-64.361" target="_blank" rel="noopener" style="color:var(--accent);">Google Maps</a> ·
+                <a href="https://www.waze.com/ul?ll=-22.728%2C-64.361&amp;navigate=yes" target="_blank" rel="noopener" style="color:var(--accent);">Waze</a>
+              </div>
             </div>
           </div>
 
@@ -583,6 +613,27 @@
               <p>No, gracias al acuerdo MERCOSUR, los ciudadanos argentinos pueden ingresar a Bolivia solo con su DNI vigente. Sin embargo, llevar pasaporte nunca está de más como documento de respaldo en caso de que el DNI presente algún problema.</p>
             </div>
           </div>
+
+          <div class="faq-item">
+            <h3 class="faq-question">¿Cuánto cuesta el pasaje de la chalana?</h3>
+            <div class="faq-answer">
+              <p>El costo varía y se actualiza periódicamente. El precio es por persona; los vehículos pagan una tarifa diferencial. Se abona en efectivo (pesos argentinos o bolivianos). Recomendamos consultar el precio actualizado el mismo día del cruce directamente en Aguas Blancas.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <h3 class="faq-question">¿Se puede pagar con tarjeta en Bermejo?</h3>
+            <div class="faq-answer">
+              <p>En la mayoría de los comercios de Bermejo el pago es en efectivo (bolivianos o pesos argentinos). Algunos locales más grandes pueden aceptar tarjeta, pero no es la norma. Llevá efectivo suficiente antes de cruzar, ya que los cajeros automáticos pueden estar saturados en días de alta afluencia.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <h3 class="faq-question">¿A qué hora conviene llegar a Aguas Blancas?</h3>
+            <div class="faq-answer">
+              <p>Lo ideal es llegar entre las 8:00 y las 10:00 hs. En ese horario las filas en Gendarmería y en la chalana son más cortas. Evitá llegar después de las 15:00 los viernes o en vísperas de feriados, cuando el tráfico fronterizo se multiplica considerablemente.</p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -626,7 +677,7 @@
     </div>
   </div>
 
-  <script type="module" src="js/app.js?v=6.0"></script>
+  <script type="module" src="js/app.js?v=7.0"></script>
 
   <!-- ══ DATOS ESTRUCTURADOS JSON-LD ══ -->
   <script type="application/ld+json">
