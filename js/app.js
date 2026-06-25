@@ -132,26 +132,50 @@ function initNavbar() {
   }
 
   /* Comportamiento del logo: Scroll suave al inicio */
-  const logo = document.querySelector('.nav-logo');
-  if (logo) {
+  const logos = document.querySelectorAll('.nav-logo, .nav-brand');
+  logos.forEach(logo => {
+    // Evitar añadir eventos duplicados si la clase se repite en el mismo elemento
+    if (logo.dataset.scrollBound) return;
+    logo.dataset.scrollBound = "true";
+
+    logo.style.cursor = 'pointer';
     logo.setAttribute('role', 'button');
     logo.setAttribute('tabindex', '0');
     logo.setAttribute('aria-label', 'Volver al inicio');
     
     const scrollToTop = (e) => {
-      if (e.type === 'click' || e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        const isReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      e.preventDefault();
+      
+      // Manejo de URL: Si estamos en una subpágina (ej. blog/), volver al index
+      const path = window.location.pathname;
+      const isHomepage = path === '/' || (path.endsWith('index.html') && !path.includes('/blog/'));
+      
+      if (!isHomepage) {
+        window.location.href = '/';
+        return;
+      }
+
+      // Scroll suave
+      const isReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      try {
         window.scrollTo({
           top: 0,
+          left: 0,
           behavior: isReduced ? 'auto' : 'smooth'
         });
+      } catch (err) {
+        // Fallback para navegadores antiguos
+        window.scrollTo(0, 0);
       }
     };
 
     logo.addEventListener('click', scrollToTop);
-    logo.addEventListener('keydown', scrollToTop);
-  }
+    logo.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        scrollToTop(e);
+      }
+    });
+  });
 
   const refreshBtn = document.getElementById('refresh-btn');
   if (refreshBtn) {
