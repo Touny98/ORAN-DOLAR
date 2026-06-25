@@ -120,7 +120,7 @@ function initVanta() {
   }
 }
 
-/* ── Navbar: hamburger menu ── */
+/* ── Navbar: hamburger menu y logo scroll ── */
 function initNavbar() {
   const hamburger = document.getElementById('hamburger');
   const navLinks   = document.getElementById('nav-links');
@@ -131,7 +131,32 @@ function initNavbar() {
     );
   }
 
-  document.getElementById('refresh-btn').addEventListener('click', () => fetchAll(true));
+  /* Comportamiento del logo: Scroll suave al inicio */
+  const logo = document.querySelector('.nav-logo');
+  if (logo) {
+    logo.setAttribute('role', 'button');
+    logo.setAttribute('tabindex', '0');
+    logo.setAttribute('aria-label', 'Volver al inicio');
+    
+    const scrollToTop = (e) => {
+      if (e.type === 'click' || e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        const isReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        window.scrollTo({
+          top: 0,
+          behavior: isReduced ? 'auto' : 'smooth'
+        });
+      }
+    };
+
+    logo.addEventListener('click', scrollToTop);
+    logo.addEventListener('keydown', scrollToTop);
+  }
+
+  const refreshBtn = document.getElementById('refresh-btn');
+  if (refreshBtn) {
+    refreshBtn.addEventListener('click', () => fetchAll(true));
+  }
 }
 
 /* ── Acordeón ── */

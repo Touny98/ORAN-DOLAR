@@ -207,6 +207,32 @@ img { max-width: 100%; height: auto; }
   font-weight: 700;
   color: var(--accent);
   letter-spacing: -0.5px;
+  cursor: pointer;
+  transition: transform 0.25s var(--ease-out-expo), opacity 0.25s ease, text-shadow 0.25s ease;
+  display: inline-block; /* Necesario para transform */
+  user-select: none;
+  outline: none;
+}
+.nav-logo:hover, .nav-logo:focus-visible {
+  transform: translateY(-1px);
+  opacity: 0.95;
+  text-shadow: 0 4px 12px var(--accent-glow);
+}
+.nav-logo:focus-visible {
+  border-radius: var(--radius-sm);
+  box-shadow: 0 0 0 2px var(--bg-base), 0 0 0 4px var(--accent);
+}
+.nav-logo:active {
+  transform: translateY(1px) scale(0.98);
+}
+/* Respetar reduced motion para microinteracciones */
+@media (prefers-reduced-motion: reduce) {
+  .nav-logo {
+    transition: none;
+  }
+  .nav-logo:hover, .nav-logo:active, .nav-logo:focus-visible {
+    transform: none;
+  }
 }
 .nav-logo span { color: var(--gold); font-weight: 400; }
 .nav-badge {
